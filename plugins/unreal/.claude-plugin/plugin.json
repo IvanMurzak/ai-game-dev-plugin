@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "unreal",
+  "displayName": "Unreal Engine — AI Game Dev",
+  "version": "0.1.0",
+  "description": "Drive Unreal Engine with Claude via unreal-mcp-cli: create a project, install the plugin, log in, and open the editor automatically.",
+  "author": {
+    "name": "Ivan Murzak",
+    "url": "https://ai-game.dev"
+  },
+  "homepage": "https://ai-game.dev",
+  "repository": "https://github.com/IvanMurzak/claude-code-game-dev",
+  "license": "Apache-2.0",
+  "keywords": ["unreal-engine", "unreal", "gamedev", "mcp", "ai", "model-context-protocol"]
+}

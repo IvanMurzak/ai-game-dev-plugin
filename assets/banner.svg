@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" fill="none" role="img" aria-label="claude-code-game-dev — Build games with Claude in Unreal, Unity and Godot, automatically">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0e1f"/>
+      <stop offset="0.55" stop-color="#160b2b"/>
+      <stop offset="1" stop-color="#241041"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#cbb6f7"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#8A63D2" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#8A63D2" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4C8BF5" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#4C8BF5" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#ffffff" fill-opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
+  <rect width="1200" height="300" rx="18" fill="url(#dots)"/>
+  <circle cx="1040" cy="66" r="270" fill="url(#glowA)"/>
+  <circle cx="150" cy="310" r="250" fill="url(#glowB)"/>
+
+  <!-- decorative game controller (top-right accent) -->
+  <g transform="translate(902,54)">
+    <rect x="0" y="16" width="176" height="82" rx="40" fill="none" stroke="#cbb6f7" stroke-opacity="0.5" stroke-width="4"/>
+    <!-- d-pad -->
+    <rect x="34" y="46" width="12" height="34" rx="2.5" fill="#cbb6f7" fill-opacity="0.72"/>
+    <rect x="23" y="57" width="34" height="12" rx="2.5" fill="#cbb6f7" fill-opacity="0.72"/>
+    <!-- buttons -->
+    <circle cx="128" cy="46" r="7" fill="#8A63D2"/>
+    <circle cx="150" cy="63" r="7" fill="#4C8BF5"/>
+    <circle cx="128" cy="80" r="7" fill="#57c9a3"/>
+    <circle cx="106" cy="63" r="7" fill="#e0567a"/>
+  </g>
+
+  <!-- eyebrow -->
+  <text x="72" y="74" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3.5" fill="#b79df0">CLAUDE CODE  ·  PLUGIN MARKETPLACE</text>
+
+  <!-- title -->
+  <text x="70" y="140" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="54" font-weight="800" fill="url(#title)">Build games with Claude</text>
+
+  <!-- subtitle -->
+  <text x="72" y="182" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18.5" font-weight="500" fill="#c6cee2">Create the project, install the plugin, log in &amp; open the editor —</text>
+  <text x="72" y="209" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18.5" font-weight="500" fill="#c6cee2">for Unreal, Unity &amp; Godot, <tspan fill="#e7defb" font-weight="700">fully automatically</tspan>.</text>
+
+  <!-- engine pills -->
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600">
+    <g>
+      <rect x="70" y="234" width="158" height="34" rx="17" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.15"/>
+      <circle cx="92" cy="251" r="5" fill="#e9edf6"/>
+      <text x="106" y="256" fill="#e9edf6">Unreal Engine</text>
+    </g>
+    <g>
+      <rect x="242" y="234" width="92" height="34" rx="17" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.15"/>
+      <circle cx="264" cy="251" r="5" fill="#dfe6ef"/>
+      <text x="278" y="256" fill="#e9edf6">Unity</text>
+    </g>
+    <g>
+      <rect x="348" y="234" width="98" height="34" rx="17" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.15"/>
+      <circle cx="370" cy="251" r="5" fill="#478CBF"/>
+      <text x="384" y="256" fill="#e9edf6">Godot</text>
+    </g>
+  </g>
+
+  <!-- powered by -->
+  <text x="1128" y="278" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#8f9ab8">powered by <tspan fill="#b79df0">ai-game.dev</tspan></text>
+
+  <!-- frame -->
+  <rect x="1" y="1" width="1198" height="298" rx="18" fill="none" stroke="#ffffff" stroke-opacity="0.09"/>
+</svg>

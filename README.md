@@ -1,5 +1,11 @@
 <div align="center">
 
+<img src="https://cdn.simpleicons.org/unrealengine/8A63D2" height="56" alt="Unreal Engine" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://cdn.simpleicons.org/unity/8A63D2" height="56" alt="Unity" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://cdn.simpleicons.org/godotengine/8A63D2" height="56" alt="Godot" />
+
 # 🎮 claude-code-game-dev
 
 ### Build games in Unreal, Unity & Godot — with Claude, automatically.
@@ -12,6 +18,8 @@ A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin marketpla
 [![Unity](https://img.shields.io/badge/Unity-000000.svg?logo=unity&logoColor=white)](https://ai-game.dev)
 [![Godot](https://img.shields.io/badge/Godot-478CBF.svg?logo=godotengine&logoColor=white)](https://ai-game.dev)
 [![Powered by ai-game.dev](https://img.shields.io/badge/Powered_by-ai--game.dev-4C8BF5.svg)](https://ai-game.dev)
+
+<img src="./assets/banner.png" alt="Build games with Claude — create the project, install the plugin, log in & open the editor for Unreal, Unity & Godot, fully automatically" width="100%" />
 
 </div>
 
@@ -28,11 +36,11 @@ automatically.**
 Once connected, the AI can build the game inside your real editor: create the project structure,
 spawn objects, edit scenes, wire logic, and iterate — all through Claude Code.
 
-| Engine | Plugin id | Wraps the CLI | It teaches Claude to… |
-| ------ | --------- | ------------- | --------------------- |
-| 🟦 **Unreal Engine** | `unreal` | [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) | create a UE project, install Unreal-MCP, log in, open in Cloud mode |
-| ⬛ **Unity** | `unity` | [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) | create a Unity project via Hub, install Unity-MCP, log in, open |
-| 🟦 **Godot** | `godot` | [`godot-cli`](https://www.npmjs.com/package/godot-cli) | create a C# Godot project, install Godot-MCP, log in, open in Cloud mode |
+| Engine | Wraps the CLI | It teaches Claude to… |
+| ------ | ------------- | --------------------- |
+| **Unreal** | [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) | create a UE project, install Unreal-MCP, log in, open in Cloud mode |
+| **Unity** | [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) | create a Unity project via Hub, install Unity-MCP, log in, open |
+| **Godot** | [`godot-cli`](https://www.npmjs.com/package/godot-cli) | create a C# Godot project, install Godot-MCP, log in, open in Cloud mode |
 
 ## 🚀 Quick start
 

@@ -1,0 +1,61 @@
+plugins/unreal/.codex-plugin/plugin.json
+  s_4bfed9ab3f9166::t_909d656fdabe01 1-27
+.agents/plugins/marketplace.json
+  s_4bfed9ab3f9166::t_fc4e58c631f75a 1-44
+plugins/godot/.codex-plugin/plugin.json
+  s_4bfed9ab3f9166::t_cf24c854255181 1-27
+.agents/skills/godot-game-dev/SKILL.md
+  s_4bfed9ab3f9166::t_72ebe9480b28b7 1-159
+.agents/skills/unity-game-dev/SKILL.md
+  s_4bfed9ab3f9166::t_15a90e485951ef 1-160
+.agents/skills/unreal-game-dev/SKILL.md
+  s_4bfed9ab3f9166::t_40be3bda2eb386 1-162
+AGENTS.md
+  s_50edd0e0346255::t_c49784037305eb 1-69
+plugins/unity/.codex-plugin/plugin.json
+  s_4d68fcead85c12::t_ff14fcde715de7 1-27
+scripts/README.md
+  s_4d68fcead85c12::t_f5e7d13057fc77 1-34
+scripts/sync-skills.mjs
+  s_c40cb388cc7b15::t_93c7e0f71cdb6b 1-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.12",
+  "base_commit_sha": "e558c2d9d40f733ee1e2654165421f6da1782633",
+  "prompts": {},
+  "sessions": {
+    "s_4bfed9ab3f9166": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "17835011-537c-4cf7-9dbb-74f24bdbaebd",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivan Murzak <Ivan.D.Murzak@gmail.com>"
+    },
+    "s_4d68fcead85c12": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e554db1e-8d99-4f43-8cb8-319a6b2dfb3c",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivan Murzak <Ivan.D.Murzak@gmail.com>"
+    },
+    "s_50edd0e0346255": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f2164075-e554-49e6-8a57-fdc35f7f7e9d",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivan Murzak <Ivan.D.Murzak@gmail.com>"
+    },
+    "s_c40cb388cc7b15": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0df37597-fa83-4334-bf16-4cbda45cf9a6",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivan Murzak <Ivan.D.Murzak@gmail.com>"
+    }
+  }
+}

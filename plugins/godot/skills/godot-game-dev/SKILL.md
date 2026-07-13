@@ -5,9 +5,10 @@ description: Use when the user wants to create, set up, or open a Godot project 
 
 # Godot — AI Game Dev runbook
 
-This skill teaches Claude to drive **Godot** fully automatically through the `godot-cli`
-npm package. The goal: take the user from nothing to a running Godot Editor that is
-**connected to [ai-game.dev](https://ai-game.dev)** so the AI can build the game for them.
+This skill teaches your AI coding assistant (Claude Code or Codex CLI) to drive **Godot** fully
+automatically through the `godot-cli` npm package. The goal: take the user from nothing to a
+running Godot Editor that is **connected to [ai-game.dev](https://ai-game.dev)** so the AI can
+build the game for them.
 
 Every command runs via `npx` so nothing needs to be installed globally:
 
@@ -95,15 +96,23 @@ npx -y godot-cli@latest wait-for-ready "C:/Games/MyGame"
 Blocks until the editor has actually booted **and connected** to the cloud. **Do not tell the
 user the setup succeeded until this passes.** If it times out, see Troubleshooting.
 
-### 7. Wire Claude Code to the project's MCP tools
+### 7. Wire your AI assistant to the project's MCP tools
+
+Register the project's MCP server with the coding assistant you are running as, so it can call
+the engine's tools directly (create nodes, edit scenes, wire signals, etc.). Pass the target that
+matches your assistant — **`claude-code`** for Claude Code, **`codex`** for Codex CLI. Run **only**
+the line that matches you:
 
 ```bash
+# If you are Claude Code:
 npx -y godot-cli@latest setup-mcp claude-code "C:/Games/MyGame"
+# If you are Codex CLI:
+npx -y godot-cli@latest setup-mcp codex        "C:/Games/MyGame"
 ```
 
-Registers the project's MCP server with Claude Code so Claude can call the engine's tools
-directly (create nodes, edit scenes, wire signals, etc.). After this, drive the game build
-through those tools.
+The same CLI also exposes `setup-skills <claude-code|codex>` if you want to (re)install this
+runbook into the assistant's own skills directory. After wiring MCP, drive the game build through
+those tools.
 
 ### Anytime: check status
 
@@ -123,7 +132,7 @@ npx -y godot-cli@latest close           "C:/Games/MyGame"
 npx -y godot-cli@latest login           "C:/Games/MyGame"   # interactive: open URL + code
 npx -y godot-cli@latest open            "C:/Games/MyGame" --mode Cloud
 npx -y godot-cli@latest wait-for-ready  "C:/Games/MyGame"
-npx -y godot-cli@latest setup-mcp claude-code "C:/Games/MyGame"
+npx -y godot-cli@latest setup-mcp <your-agent> "C:/Games/MyGame"   # <your-agent> = claude-code OR codex
 ```
 
 ## Troubleshooting

@@ -1,0 +1,27 @@
+{
+  "name": "unity",
+  "version": "0.1.0",
+  "description": "Drive Unity with your AI coding agent via unity-mcp-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
+  "author": {
+    "name": "Ivan Murzak",
+    "url": "https://ai-game.dev"
+  },
+  "homepage": "https://ai-game.dev",
+  "repository": "https://github.com/IvanMurzak/ai-game-dev-plugin",
+  "license": "Apache-2.0",
+  "keywords": ["unity", "unity3d", "gamedev", "mcp", "ai", "model-context-protocol"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Unity — AI Game Dev",
+    "shortDescription": "Create, connect & build Unity games with AI via ai-game.dev.",
+    "longDescription": "Teaches Codex to drive Unity end to end through the unity-mcp-cli npm package: scaffold a project via Unity Hub, install the Unity-MCP package, log in to ai-game.dev, open the editor (which auto-connects in Cloud mode), confirm the connection, and wire the project's MCP tools — so you can build a Unity game just by asking.",
+    "developerName": "Ivan Murzak",
+    "category": "Coding",
+    "websiteURL": "https://ai-game.dev",
+    "brandColor": "#8A63D2",
+    "defaultPrompt": [
+      "Set up a new Unity game with AI and connect it to ai-game.dev.",
+      "Open my Unity project with AI and wire up the MCP tools."
+    ]
+  }
+}

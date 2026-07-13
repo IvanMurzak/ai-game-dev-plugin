@@ -5,10 +5,10 @@ description: Use when the user wants to create, set up, or open an Unreal Engine
 
 # Unreal Engine — AI Game Dev runbook
 
-This skill teaches Claude to drive **Unreal Engine** fully automatically through the
-`unreal-mcp-cli` npm package. The goal: take the user from nothing to a running Unreal
-Editor that is **connected to [ai-game.dev](https://ai-game.dev)** so the AI can build
-the game for them.
+This skill teaches your AI coding assistant (Claude Code or Codex CLI) to drive **Unreal
+Engine** fully automatically through the `unreal-mcp-cli` npm package. The goal: take the user
+from nothing to a running Unreal Editor that is **connected to [ai-game.dev](https://ai-game.dev)**
+so the AI can build the game for them.
 
 Every command runs via `npx` so nothing needs to be installed globally:
 
@@ -97,15 +97,23 @@ npx -y unreal-mcp-cli@latest wait-for-ready -p "C:/Games/MyGame"
 Blocks until the editor has actually booted **and connected** to the cloud. **Do not tell the
 user the setup succeeded until this passes.** If it times out, see Troubleshooting.
 
-### 7. Wire Claude Code to the project's MCP tools
+### 7. Wire your AI assistant to the project's MCP tools
+
+Register the project's MCP server with the coding assistant you are running as, so it can call
+the engine's tools directly (spawn actors, edit the level, run Blueprints, etc.). Pass the target
+that matches your assistant — **`claude-code`** for Claude Code, **`codex`** for Codex CLI. Run
+**only** the line that matches you:
 
 ```bash
+# If you are Claude Code:
 npx -y unreal-mcp-cli@latest setup-mcp claude-code -p "C:/Games/MyGame"
+# If you are Codex CLI:
+npx -y unreal-mcp-cli@latest setup-mcp codex        -p "C:/Games/MyGame"
 ```
 
-Registers the project's MCP server with Claude Code so Claude can call the engine's tools
-directly (spawn actors, edit the level, run Blueprints, etc.). After this, drive the game build
-through those tools.
+The same CLI also exposes `setup-skills <claude-code|codex>` if you want to (re)install this
+runbook into the assistant's own skills directory. After wiring MCP, drive the game build through
+those tools.
 
 ### Anytime: check status
 
@@ -125,7 +133,7 @@ npx -y unreal-mcp-cli@latest close           "C:/Games/MyGame"
 npx -y unreal-mcp-cli@latest login -p        "C:/Games/MyGame"   # interactive: open URL + code
 npx -y unreal-mcp-cli@latest open            "C:/Games/MyGame" --connection-mode Cloud
 npx -y unreal-mcp-cli@latest wait-for-ready -p "C:/Games/MyGame"
-npx -y unreal-mcp-cli@latest setup-mcp claude-code -p "C:/Games/MyGame"
+npx -y unreal-mcp-cli@latest setup-mcp <your-agent> -p "C:/Games/MyGame"   # <your-agent> = claude-code OR codex
 ```
 
 ## Troubleshooting

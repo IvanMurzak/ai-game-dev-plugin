@@ -9,7 +9,7 @@
     "url": "https://ai-game.dev"
   },
   "homepage": "https://ai-game.dev",
-  "repository": "https://github.com/IvanMurzak/claude-code-game-dev",
+  "repository": "https://github.com/IvanMurzak/ai-game-dev-plugin",
   "license": "Apache-2.0",
   "keywords": ["unity", "unity3d", "gamedev", "mcp", "ai", "model-context-protocol"]
 }

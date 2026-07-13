@@ -42,10 +42,10 @@
   </g>
 
   <!-- eyebrow -->
-  <text x="72" y="74" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3.5" fill="#b79df0">CLAUDE CODE  ·  PLUGIN MARKETPLACE</text>
+  <text x="72" y="74" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3.5" fill="#b79df0">CLAUDE CODE  +  CODEX  ·  PLUGIN MARKETPLACE</text>
 
   <!-- title -->
-  <text x="70" y="140" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="54" font-weight="800" fill="url(#title)">Build games with Claude</text>
+  <text x="70" y="140" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="54" font-weight="800" fill="url(#title)">Build games with AI</text>
 
   <!-- subtitle -->
   <text x="72" y="182" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18.5" font-weight="500" fill="#c6cee2">Create the project, install the plugin, log in &amp; open the editor —</text>

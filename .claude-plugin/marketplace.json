@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
-  "name": "claude-code-game-dev",
+  "name": "ai-game-dev-plugin",
   "description": "Claude Code plugins for AI game development — Unreal, Unity & Godot.",
   "owner": {
     "name": "Ivan Murzak",

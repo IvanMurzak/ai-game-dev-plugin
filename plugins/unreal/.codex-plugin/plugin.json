@@ -1,0 +1,27 @@
+{
+  "name": "unreal",
+  "version": "0.1.0",
+  "description": "Drive Unreal Engine with your AI coding agent via unreal-mcp-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
+  "author": {
+    "name": "Ivan Murzak",
+    "url": "https://ai-game.dev"
+  },
+  "homepage": "https://ai-game.dev",
+  "repository": "https://github.com/IvanMurzak/ai-game-dev-plugin",
+  "license": "Apache-2.0",
+  "keywords": ["unreal-engine", "unreal", "gamedev", "mcp", "ai", "model-context-protocol"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Unreal Engine — AI Game Dev",
+    "shortDescription": "Create, connect & build Unreal games with AI via ai-game.dev.",
+    "longDescription": "Teaches Codex to drive Unreal Engine end to end through the unreal-mcp-cli npm package: scaffold a project, install the Unreal-MCP plugin, log in to ai-game.dev, open the editor in Cloud mode, confirm the connection, and wire the project's MCP tools — so you can build an Unreal game just by asking.",
+    "developerName": "Ivan Murzak",
+    "category": "Coding",
+    "websiteURL": "https://ai-game.dev",
+    "brandColor": "#8A63D2",
+    "defaultPrompt": [
+      "Set up a new Unreal game with AI and connect it to ai-game.dev.",
+      "Open my Unreal project with AI and wire up the MCP tools."
+    ]
+  }
+}

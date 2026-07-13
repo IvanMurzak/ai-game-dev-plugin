@@ -1,0 +1,44 @@
+{
+  "name": "ai-game-dev-plugin",
+  "interface": {
+    "displayName": "AI Game Dev — Unreal, Unity & Godot"
+  },
+  "plugins": [
+    {
+      "name": "unreal",
+      "source": {
+        "source": "local",
+        "path": "./plugins/unreal"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "unity",
+      "source": {
+        "source": "local",
+        "path": "./plugins/unity"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "godot",
+      "source": {
+        "source": "local",
+        "path": "./plugins/godot"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # AGENTS.md
 
-Custom instructions for AI coding agents (Codex CLI reads this natively; other agents read it as
-extra context) working **inside this repository**.
+Instructions for AI coding agents working **inside this repository** (read natively by Codex CLI
+and Claude Code).
 
 ## What this repo is
 
@@ -26,9 +26,17 @@ plugins/<engine>/
   skills/<engine>-game-dev/SKILL.md      # CANONICAL runbook (shared by both agents' plugins)
   README.md                              # per-plugin readme (agent-neutral)
 scripts/sync-skills.mjs                  # regenerates .agents/skills/ from the canonical skills
+assets/                                  # README images (banner)
 ```
 
 `<engine>` is one of `unreal`, `unity`, `godot`.
+
+Where new files go:
+- Runbook changes: only the canonical `plugins/<engine>/skills/<engine>-game-dev/SKILL.md`, then sync.
+- A new engine plugin: `plugins/<engine>/` with the same shape, registered in **both** marketplace
+  catalogs and in the `ENGINES` list of `scripts/sync-skills.mjs`.
+- Everything under `plugins/<engine>/` ships to users; keep repo-only notes out of it.
+- Maintenance scripts: `scripts/` (dependency-free Node 18+). Images: `assets/`.
 
 ## Single source of truth for the skill bodies
 

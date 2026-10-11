@@ -36,7 +36,7 @@ Where new files go:
 - A new engine plugin: `plugins/<engine>/` with the same shape, registered in **both** marketplace
   catalogs and in the `ENGINES` list of `scripts/sync-skills.mjs`.
 - Everything under `plugins/<engine>/` ships to users; keep repo-only notes out of it.
-- Maintenance scripts: `scripts/` (dependency-free Node 18+). Images: `assets/`.
+- Maintenance scripts: `scripts/` (dependency-free, Node 18+).
 
 ## Single source of truth for the skill bodies
 

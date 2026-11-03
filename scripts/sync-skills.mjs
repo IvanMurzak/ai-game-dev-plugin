@@ -4,7 +4,8 @@
 // - The canonical runbook plugins/<engine>-mcp/skills/<engine>-game-dev/SKILL.md is copied to
 //   .agents/skills/ (Codex repo-native skills) and skills/ (the Gemini CLI extension at the root).
 // - The root assets/logo.png is copied into each plugin (Cursor needs a logo inside the plugin).
-// - Every "version" (catalog entries, plugin manifests, gemini-extension.json) must be the same.
+// - Every "version" (catalog entries, plugin manifests, gemini-extension.json) must be the same,
+//   and each plugin's root plugin.json (Agent Plugins standard) mirrors its Cursor manifest.
 //
 //   node scripts/sync-skills.mjs            # write the copies
 //   node scripts/sync-skills.mjs --check    # verify only; exit 1 on drift or a version mismatch
@@ -17,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ENGINES = ['unreal', 'unity', 'godot'];
-const PLUGIN_MANIFESTS = ['.claude-plugin', '.codex-plugin', '.cursor-plugin'];
+const PLUGIN_MANIFESTS = ['.claude-plugin', '.codex-plugin', '.cursor-plugin', '']; // '' = root plugin.json
 
 // source -> generated copies (byte-identical)
 const COPIES = [
@@ -65,13 +66,23 @@ const versions = new Map();
 for (const p of readJson('.claude-plugin/marketplace.json').plugins) {
   versions.set(`.claude-plugin/marketplace.json (${p.name})`, p.version);
 }
+const SHARED_FIELDS = ['name', 'description', 'author', 'homepage', 'repository', 'license', 'keywords'];
 for (const engine of ENGINES) {
+  const manifests = {};
   for (const dir of PLUGIN_MANIFESTS) {
     const rel = join('plugins', `${engine}-mcp`, dir, 'plugin.json');
-    versions.set(rel, readJson(rel).version);
+    manifests[dir] = readJson(rel);
+    versions.set(rel, manifests[dir].version);
   }
-  const open = join('plugins', `${engine}-mcp`, 'plugin.json'); // Agent Plugins open standard
-  versions.set(open, readJson(open).version);
+  // The Agent Plugins open-standard manifest (root plugin.json) mirrors the Cursor one.
+  for (const field of SHARED_FIELDS) {
+    const a = JSON.stringify(manifests['.cursor-plugin'][field]);
+    const b = JSON.stringify(manifests[''][field]);
+    if (a !== b) {
+      console.error(`[sync-skills] FIELD MISMATCH ${engine}-mcp "${field}": plugin.json vs .cursor-plugin/plugin.json`);
+      problems++;
+    }
+  }
 }
 versions.set('gemini-extension.json', readJson('gemini-extension.json').version);
 
@@ -88,7 +99,7 @@ if (distinct.size !== 1 || typeof version !== 'string') {
 if (problems > 0) {
   console.error(
     `\n[sync-skills] ${problems} problem(s). Run \`node scripts/sync-skills.mjs\` for copies; ` +
-      'fix version mismatches by hand.'
+      'fix version and field mismatches by hand.'
   );
   process.exit(1);
 }

@@ -1,78 +1,105 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" fill="none" role="img" aria-label="ai-game-dev-plugin — Build games with AI in Unreal, Unity and Godot, automatically">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" fill="none" role="img" aria-label="AI Game Developer: plugins and skills for Claude Code and Codex. Build games in Unity, Unreal and Godot with AI.">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0a0e1f"/>
-      <stop offset="0.55" stop-color="#160b2b"/>
-      <stop offset="1" stop-color="#241041"/>
+      <stop offset="0" stop-color="#07090c"/>
+      <stop offset="0.6" stop-color="#0d1116"/>
+      <stop offset="1" stop-color="#151a21"/>
     </linearGradient>
-    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#cbb6f7"/>
-    </linearGradient>
-    <radialGradient id="glowA" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#8A63D2" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#8A63D2" stop-opacity="0"/>
+    <radialGradient id="glowRed" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff1a2e" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#ff1a2e" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="glowB" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#4C8BF5" stop-opacity="0.42"/>
-      <stop offset="1" stop-color="#4C8BF5" stop-opacity="0"/>
+    <radialGradient id="glowTeal" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3ad6e0" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#3ad6e0" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1.5" fill="#ffffff" fill-opacity="0.05"/>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
     </pattern>
+    <linearGradient id="fadeR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#07090c" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#07090c" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#07090c" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hazard" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffdc00"/>
+      <stop offset="1" stop-color="#ffb300"/>
+    </linearGradient>
   </defs>
 
-  <!-- background -->
-  <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
-  <rect width="1200" height="300" rx="18" fill="url(#dots)"/>
-  <circle cx="1040" cy="66" r="270" fill="url(#glowA)"/>
-  <circle cx="150" cy="310" r="250" fill="url(#glowB)"/>
+  <!-- background: dark grid with red / teal streaks (brand: AI Game Developer) -->
+  <rect width="1280" height="400" rx="20" fill="url(#bg)"/>
+  <rect width="1280" height="400" rx="20" fill="url(#grid)"/>
+  <circle cx="1080" cy="120" r="320" fill="url(#glowRed)"/>
+  <circle cx="820" cy="420" r="300" fill="url(#glowTeal)"/>
 
-  <!-- decorative game controller (top-right accent) -->
-  <g transform="translate(902,54)">
-    <rect x="0" y="16" width="176" height="82" rx="40" fill="none" stroke="#cbb6f7" stroke-opacity="0.5" stroke-width="4"/>
-    <!-- d-pad -->
-    <rect x="34" y="46" width="12" height="34" rx="2.5" fill="#cbb6f7" fill-opacity="0.72"/>
-    <rect x="23" y="57" width="34" height="12" rx="2.5" fill="#cbb6f7" fill-opacity="0.72"/>
-    <!-- buttons -->
-    <circle cx="128" cy="46" r="7" fill="#8A63D2"/>
-    <circle cx="150" cy="63" r="7" fill="#4C8BF5"/>
-    <circle cx="128" cy="80" r="7" fill="#57c9a3"/>
-    <circle cx="106" cy="63" r="7" fill="#e0567a"/>
+  <g stroke-linecap="round">
+    <path d="M760 70h120" stroke="#ff1a2e" stroke-width="3" stroke-opacity="0.8"/>
+    <path d="M1010 300h150" stroke="#ff1a2e" stroke-width="3" stroke-opacity="0.7"/>
+    <path d="M1180 60v90" stroke="#ff1a2e" stroke-width="3" stroke-opacity="0.6"/>
+    <path d="M700 340h90" stroke="#3ad6e0" stroke-width="2" stroke-opacity="0.6"/>
+    <path d="M960 40h70" stroke="#3ad6e0" stroke-width="2" stroke-opacity="0.55"/>
+    <path d="M1220 240v70" stroke="#3ad6e0" stroke-width="2" stroke-opacity="0.5"/>
+    <path d="M900 200h40" stroke="#ffffff" stroke-width="2" stroke-opacity="0.35"/>
   </g>
+  <g fill="#ffffff">
+    <circle cx="840" cy="120" r="1.6" fill-opacity="0.5"/>
+    <circle cx="1120" cy="200" r="1.4" fill-opacity="0.45"/>
+    <circle cx="980" cy="260" r="1.8" fill-opacity="0.4"/>
+    <circle cx="1210" cy="360" r="1.4" fill-opacity="0.4"/>
+    <circle cx="760" cy="230" r="1.2" fill-opacity="0.35"/>
+    <circle cx="1060" cy="350" r="1.2" fill-opacity="0.35"/>
+  </g>
+  <rect width="1280" height="400" rx="20" fill="url(#fadeR)"/>
 
-  <!-- eyebrow -->
-  <text x="72" y="74" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3.5" fill="#b79df0">CLAUDE CODE  +  CODEX  ·  PLUGIN MARKETPLACE</text>
+  <!-- hazard stripe -->
+  <g transform="translate(64 64)">
+    <rect width="132" height="10" rx="2" fill="url(#hazard)"/>
+  </g>
 
   <!-- title -->
-  <text x="70" y="140" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="54" font-weight="800" fill="url(#title)">Build games with AI</text>
+  <g font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-weight="800">
+    <text x="60" y="190" font-size="128" fill="#ff1a2e" letter-spacing="-2">AI</text>
+    <text x="232" y="190" font-size="128" fill="#ffffff" letter-spacing="-3">Game Dev</text>
+    <text x="64" y="252" font-size="40" fill="#ffffff" fill-opacity="0.92" letter-spacing="-0.5">Plugins &amp; Skills for Claude Code and Codex</text>
+  </g>
 
-  <!-- subtitle -->
-  <text x="72" y="182" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18.5" font-weight="500" fill="#c6cee2">Create the project, install the plugin, log in &amp; open the editor —</text>
-  <text x="72" y="209" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18.5" font-weight="500" fill="#c6cee2">for Unreal, Unity &amp; Godot, <tspan fill="#e7defb" font-weight="700">fully automatically</tspan>.</text>
-
-  <!-- engine pills -->
-  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600">
-    <g>
-      <rect x="70" y="234" width="158" height="34" rx="17" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.15"/>
-      <circle cx="92" cy="251" r="5" fill="#e9edf6"/>
-      <text x="106" y="256" fill="#e9edf6">Unreal Engine</text>
+  <!-- engines -->
+  <g font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-weight="700" font-size="22">
+    <g transform="translate(64 296)">
+      <rect width="118" height="44" rx="22" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.22"/>
+      <circle cx="24" cy="22" r="6" fill="#ffffff"/>
+      <text x="40" y="30" fill="#ffffff">Unity</text>
     </g>
-    <g>
-      <rect x="242" y="234" width="92" height="34" rx="17" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.15"/>
-      <circle cx="264" cy="251" r="5" fill="#dfe6ef"/>
-      <text x="278" y="256" fill="#e9edf6">Unity</text>
+    <g transform="translate(196 296)">
+      <rect width="124" height="44" rx="22" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.22"/>
+      <circle cx="24" cy="22" r="6" fill="#3ad6e0"/>
+      <text x="40" y="30" fill="#ffffff">Unreal</text>
     </g>
-    <g>
-      <rect x="348" y="234" width="98" height="34" rx="17" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.15"/>
-      <circle cx="370" cy="251" r="5" fill="#478CBF"/>
-      <text x="384" y="256" fill="#e9edf6">Godot</text>
+    <g transform="translate(334 296)">
+      <rect width="120" height="44" rx="22" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.22"/>
+      <circle cx="24" cy="22" r="6" fill="#478cbf"/>
+      <text x="40" y="30" fill="#ffffff">Godot</text>
     </g>
   </g>
 
-  <!-- powered by -->
-  <text x="1128" y="278" text-anchor="end" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#8f9ab8">powered by <tspan fill="#b79df0">ai-game.dev</tspan></text>
+  <!-- terminal card -->
+  <g transform="translate(908 78)">
+    <rect width="312" height="214" rx="14" fill="#0b0e12" fill-opacity="0.92" stroke="#ffffff" stroke-opacity="0.16"/>
+    <circle cx="22" cy="20" r="5" fill="#ff5f57"/>
+    <circle cx="40" cy="20" r="5" fill="#febc2e"/>
+    <circle cx="58" cy="20" r="5" fill="#28c840"/>
+    <path d="M0 38h312" stroke="#ffffff" stroke-opacity="0.1"/>
+    <g font-family="'SF Mono','Menlo','Consolas',monospace" font-size="13.5" xml:space="preserve">
+      <text x="18" y="66" fill="#ff1a2e">&gt;<tspan fill="#ffffff"> /plugin install unity@</tspan></text>
+      <text x="32" y="86" fill="#ffffff">ai-game-dev-plugin</text>
+      <text x="18" y="116" fill="#3ad6e0">✓ <tspan fill="#c9d1d9">project created</tspan></text>
+      <text x="18" y="138" fill="#3ad6e0">✓ <tspan fill="#c9d1d9">plugin installed</tspan></text>
+      <text x="18" y="160" fill="#3ad6e0">✓ <tspan fill="#c9d1d9">signed in to ai-game.dev</tspan></text>
+      <text x="18" y="182" fill="#3ad6e0">✓ <tspan fill="#c9d1d9">editor connected</tspan></text>
+      <rect x="18" y="194" width="8" height="14" fill="#ffffff" fill-opacity="0.8"/>
+    </g>
+  </g>
 
-  <!-- frame -->
-  <rect x="1" y="1" width="1198" height="298" rx="18" fill="none" stroke="#ffffff" stroke-opacity="0.09"/>
+  <text x="1216" y="364" text-anchor="end" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-weight="600" font-size="22" fill="#ffffff" fill-opacity="0.7">ai-game.dev</text>
 </svg>

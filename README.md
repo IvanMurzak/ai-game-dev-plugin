@@ -1,168 +1,129 @@
-<div align="center">
+<div align="center" width="100%">
 
-<img src="https://cdn.simpleicons.org/unrealengine/8A63D2" height="56" alt="Unreal Engine" />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://cdn.simpleicons.org/unity/8A63D2" height="56" alt="Unity" />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://cdn.simpleicons.org/godotengine/8A63D2" height="56" alt="Godot" />
+<h1>✨ AI Game Developer — <i>Plugins &amp; Skills</i></h1>
 
-# 🎮 ai-game-dev-plugin
+[![Claude Code plugin](https://img.shields.io/badge/Claude_Code-plugin-D97757?style=flat&logo=claude&logoColor=white&labelColor=333A41 'Claude Code plugin marketplace')](https://code.claude.com/docs/en/plugins)
+[![Codex plugin](https://img.shields.io/badge/Codex-plugin-10A37F?style=flat&labelColor=333A41 'Codex plugin marketplace')](https://developers.openai.com/codex/)
+[![Agent Skills](https://img.shields.io/badge/Agent-Skills-FFDC00?style=flat&labelColor=333A41 'SKILL.md runbooks')](./plugins)
+[![MCP](https://badge.mcpx.dev 'MCP Server')](https://modelcontextprotocol.io/introduction)
+[![Unity](https://img.shields.io/badge/Unity-X?style=flat&logo=unity&labelColor=333A41&color=2A2A2A 'Unity')](https://github.com/IvanMurzak/Unity-MCP)
+[![Unreal Engine](https://img.shields.io/badge/Unreal-X?style=flat&logo=unrealengine&labelColor=333A41&color=2A2A2A 'Unreal Engine')](https://github.com/IvanMurzak/Unreal-MCP)
+[![Godot](https://img.shields.io/badge/Godot-X?style=flat&logo=godotengine&logoColor=white&labelColor=333A41&color=2A2A2A 'Godot')](https://github.com/IvanMurzak/Godot-MCP)</br>
+[![Discord](https://img.shields.io/badge/Discord-Join-7289da?logo=discord&logoColor=white&labelColor=333A41 'Join')](https://discord.gg/cfbdMZX99G)
+[![Stars](https://img.shields.io/github/stars/IvanMurzak/ai-game-dev-plugin 'Stars')](https://github.com/IvanMurzak/ai-game-dev-plugin/stargazers)
+[![License](https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&labelColor=333A41)](./LICENSE)
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
-### Build games in Unreal, Unity & Godot — with AI, automatically.
+<img src="./assets/banner.png" alt="AI Game Dev: plugins and skills for Claude Code and Codex. Build games in Unity, Unreal and Godot with AI." width="100%" />
 
-A plugin marketplace for AI coding agents — **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)**
-and **[OpenAI Codex CLI](https://developers.openai.com/codex/)** — that teaches the agent to spin up
-a real game project, install the engine plugin, log you in, and open the editor connected to the
-cloud — so you can build a game just by asking.
-
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
-[![Claude Code Plugins](https://img.shields.io/badge/Claude_Code-Plugins-8A63D2.svg)](https://docs.anthropic.com/en/docs/claude-code)
-[![Codex CLI Plugins](https://img.shields.io/badge/Codex_CLI-Plugins-10A37F.svg)](https://developers.openai.com/codex/)
-[![Unreal Engine](https://img.shields.io/badge/Unreal_Engine-0E1128.svg?logo=unrealengine&logoColor=white)](https://ai-game.dev)
-[![Unity](https://img.shields.io/badge/Unity-000000.svg?logo=unity&logoColor=white)](https://ai-game.dev)
-[![Godot](https://img.shields.io/badge/Godot-478CBF.svg?logo=godotengine&logoColor=white)](https://ai-game.dev)
-[![Powered by ai-game.dev](https://img.shields.io/badge/Powered_by-ai--game.dev-4C8BF5.svg)](https://ai-game.dev)
-
-<img src="./assets/banner.png" alt="Build games with AI — create the project, install the plugin, log in & open the editor for Unreal, Unity & Godot, fully automatically" width="100%" />
+<p>
+  <a href="https://code.claude.com/docs/en/plugins"><img src="https://github.com/IvanMurzak/Unity-MCP/raw/main/docs/img/mcp-clients/claude-64.png" alt="Claude Code" title="Claude Code" height="36"></a>&nbsp;&nbsp;
+  <a href="https://developers.openai.com/codex/"><img src="https://github.com/IvanMurzak/Unity-MCP/raw/main/docs/img/mcp-clients/codex-64.png" alt="Codex" title="Codex" height="36"></a>
+</p>
 
 </div>
 
----
+Ask your coding agent for a game and it sets everything up: it creates the engine project, installs
+the AI Game Developer plugin, signs you in to [ai-game.dev](https://ai-game.dev), opens the editor
+and connects its MCP tools. From there the agent builds the game inside your real editor.
 
-## What is this?
+One plugin per engine (**Unity**, **Unreal Engine**, **Godot**), each a single **skill** that works
+in **Claude Code** and **OpenAI Codex** from the same source.
 
-**ai-game-dev-plugin** is a marketplace of three game-engine plugins — one per engine — for AI
-coding agents. Each one teaches the agent to drive that engine's official npm CLI so it can take you
-from _nothing_ to a running editor **connected to [ai-game.dev](https://ai-game.dev)** — creating
-the project, installing the engine plugin, logging you in, and opening the editor **for you,
-automatically.**
+<div align="center">
+  <img src="./assets/demo.svg" alt="Demo: the agent creates a Unity project, installs the plugin, signs in to ai-game.dev, opens the editor and wires MCP tools." width="100%" />
+</div>
 
-It works with **both Claude Code and OpenAI Codex CLI** from one source tree: a single shared skill
-per engine, plus a plugin manifest for each agent.
-
-Once connected, the AI can build the game inside your real editor: create the project structure,
-spawn objects, edit scenes, wire logic, and iterate — all through your coding agent.
-
-| Engine | Wraps the CLI | It teaches the agent to… |
-| ------ | ------------- | ------------------------ |
-| **Unreal** | [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) | create a UE project, install Unreal-MCP, log in, open in Cloud mode |
-| **Unity** | [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) | create a Unity project via Hub, install Unity-MCP, log in, open |
-| **Godot** | [`godot-cli`](https://www.npmjs.com/package/godot-cli) | create a C# Godot project, install Godot-MCP, log in, open in Cloud mode |
+> **[💬 Join our Discord](https://discord.gg/cfbdMZX99G)** to ask questions and show what you build.
 
 ## 🚀 Quick start
-
-Add the marketplace, then install the plugin(s) for the engine(s) you use.
 
 ### Claude Code
 
 ```text
 /plugin marketplace add IvanMurzak/ai-game-dev-plugin
-```
-
-```text
-/plugin install unreal@ai-game-dev-plugin
 /plugin install unity@ai-game-dev-plugin
-/plugin install godot@ai-game-dev-plugin
 ```
 
-### OpenAI Codex CLI
-
-Register the marketplace from your shell, then install from inside a Codex session:
+### OpenAI Codex
 
 ```bash
 codex plugin marketplace add IvanMurzak/ai-game-dev-plugin
+codex plugin add unity@ai-game-dev-plugin
 ```
 
-```text
-/plugin install unreal@ai-game-dev-plugin
-/plugin install unity@ai-game-dev-plugin
-/plugin install godot@ai-game-dev-plugin
-```
+Or open `/plugins` inside Codex and install from the plugin browser.
 
-> **Skills-only alternative (Codex):** the runbooks are also published as repo-native skills under
-> [`.agents/skills/`](./.agents/skills). Codex discovers skills by scanning `.agents/skills` from your
-> working directory up to the repo root, so you can drop a `<engine>-game-dev` folder into your
-> project's `.agents/skills/` (or `~/.agents/skills/`) instead of installing the plugin.
+Swap `unity` for `unreal` or `godot`, or install all three. Then just ask:
 
-Then just ask:
+> _"Make a new Unity game and connect it to ai-game.dev."_
 
-> _"Set up a new Unreal game with AI and connect it to ai-game.dev."_
+<details>
+<summary><b>Skills only, without the plugin</b></summary>
 
-## The three plugins
+Each runbook is a plain [`SKILL.md`](./plugins). Copy a `<engine>-game-dev` folder into your
+agent's skills directory:
 
-| Engine | Claude Code | Codex CLI |
-| ------ | ----------- | --------- |
-| Unreal Engine | `/plugin install unreal@ai-game-dev-plugin` | `/plugin install unreal@ai-game-dev-plugin` |
-| Unity | `/plugin install unity@ai-game-dev-plugin` | `/plugin install unity@ai-game-dev-plugin` |
-| Godot | `/plugin install godot@ai-game-dev-plugin` | `/plugin install godot@ai-game-dev-plugin` |
+| Agent | Project skills | Personal skills |
+| ----- | -------------- | --------------- |
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
+| Codex | `.agents/skills/` | `~/.agents/skills/` |
 
-Each plugin is a single, focused **skill** that auto-activates the moment you ask the agent to
-create, set up, or open a project for that engine with AI.
+Codex users can also point at the generated copies in [`.agents/skills/`](./.agents/skills).
 
-## 🤖 What the AI does automatically
+</details>
 
-When you ask the agent to set up a game, the skill runs the full end-to-end flow via
-`npx -y <engine-cli>@latest`:
+## 🎮 The plugins
 
-1. **Create** — scaffold a fresh engine project (skipped if you already have one).
-2. **Install** — add the engine's MCP plugin/addon to the project.
-3. **Close** — ensure the editor is not running, so it picks up the new token on next launch.
-4. **Login** — an interactive device-code sign-in to [ai-game.dev](https://ai-game.dev); the agent
-   relays the verification URL + code for you to open in a browser.
-5. **Open** — launch the editor in **Cloud** mode.
-6. **Connect** — wait until the editor has actually connected to the cloud (the agent won't claim
-   success until this passes).
-7. **Wire MCP** — register the project's tools with your agent (`setup-mcp claude-code` for Claude
-   Code, `setup-mcp codex` for Codex) so the AI can build the game.
+| Engine | Install (Claude Code) | Drives the CLI | Engine plugin |
+| ------ | ------- | -------------- | ------------- |
+| <img src="https://cdn.simpleicons.org/unity/white" height="16" alt="" /> **Unity** | `/plugin install unity@ai-game-dev-plugin` | [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) | [Unity-MCP](https://github.com/IvanMurzak/Unity-MCP) |
+| <img src="https://cdn.simpleicons.org/unrealengine/white" height="16" alt="" /> **Unreal Engine** | `/plugin install unreal@ai-game-dev-plugin` | [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) | [Unreal-MCP](https://github.com/IvanMurzak/Unreal-MCP) |
+| <img src="https://cdn.simpleicons.org/godotengine/478CBF" height="16" alt="" /> **Godot** | `/plugin install godot@ai-game-dev-plugin` | [`godot-cli`](https://www.npmjs.com/package/godot-cli) | [Godot-MCP](https://github.com/IvanMurzak/Godot-MCP) |
 
-> **Ordering that matters:** the editor is always **closed before login**, and **opened only after
-> a successful login**, so the fresh auth token is loaded at startup. The agent enforces this for you.
+The skill activates by itself when you ask to create, set up or open a project for its engine.
 
-## ✅ Prerequisites
+## 🤖 What the agent does
 
-- **Node.js 18+** (the CLIs run through `npx`).
-- The **engine installed** — Unreal Engine, Unity (via Unity Hub), or Godot 4.x **.NET/Mono**
-  (Godot C# projects also need the **.NET SDK**).
-- A **free [ai-game.dev](https://ai-game.dev) account** for the login step.
-- A desktop session — the editors open a real window.
+Every step runs through `npx -y <engine-cli>@latest`, so nothing is installed globally.
 
-## 🌐 Powered by ai-game.dev
+1. **Create** a project (skipped when you already have one).
+2. **Install** the AI Game Developer plugin into it.
+3. **Sign in** to ai-game.dev. The agent shows you a link and a code to confirm in your browser.
+   You sign in once per machine.
+4. **Restart** the editor (close, then open) so it picks up the sign-in and connects to ai-game.dev.
+5. **Verify** the editor is ready and connected. The agent does not report success before that.
+6. **Wire MCP**: register the project's tools with your agent (`setup-mcp claude-code` or
+   `setup-mcp codex`), so it can build the game: scenes, objects, scripts, tests and screenshots.
 
-These plugins are the on-ramp to **[ai-game.dev](https://ai-game.dev)** — the cloud that lets AI
-build games inside your real engine. The login step authorizes your project against the cloud, and
-the editor connects to it so the AI can create and iterate on your game. Bring your own free account;
-the plugins wire everything else up.
+The exact commands, checks and fixes for each engine are in its runbook:
+[Unity](./plugins/unity/skills/unity-game-dev/SKILL.md) ·
+[Unreal](./plugins/unreal/skills/unreal-game-dev/SKILL.md) ·
+[Godot](./plugins/godot/skills/godot-game-dev/SKILL.md).
 
-## 🧩 How it fits together (for contributors)
+## ✅ Requirements
 
-One source tree serves both agents:
+- **Node.js 20.19+ or 22.12+** (the CLIs run through `npx`).
+- **The engine**: Unity (through Unity Hub), Unreal Engine 5.5+, or Godot 4.3+ **.NET** with the .NET SDK.
+- A free **[ai-game.dev](https://ai-game.dev)** account.
+- A desktop session: the editor opens a real window.
 
-- **Canonical skill** — `plugins/<engine>/skills/<engine>-game-dev/SKILL.md`. Both plugin manifests
-  reference the plugin's own `./skills/` directory, so the Claude Code and Codex bundles share this
-  one file.
-  - Claude Code manifest: `plugins/<engine>/.claude-plugin/plugin.json`
-  - Codex manifest: `plugins/<engine>/.codex-plugin/plugin.json`
-- **Marketplace catalogs** — `.claude-plugin/marketplace.json` (Claude Code) and
-  `.agents/plugins/marketplace.json` (Codex).
-- **Repo-native Codex skills** — `.agents/skills/<engine>-game-dev/SKILL.md` are **generated** from
-  the canonical skills by [`scripts/sync-skills.mjs`](./scripts). After editing a canonical `SKILL.md`,
-  run `node scripts/sync-skills.mjs` to regenerate them, and `node scripts/sync-skills.mjs --check`
-  to guard against drift.
-- **Agent instructions** — [`AGENTS.md`](./AGENTS.md) (Codex) mirrors the layout and golden rules.
+## 🧩 Related projects
 
-See [`scripts/README.md`](./scripts/README.md) and [`AGENTS.md`](./AGENTS.md) for the full picture.
+| Project | What it is |
+| ------- | ---------- |
+| [Unity-MCP](https://github.com/IvanMurzak/Unity-MCP) | AI Game Developer for Unity: MCP tools, skills and the `unity-mcp-cli` |
+| [Unreal-MCP](https://github.com/IvanMurzak/Unreal-MCP) | AI Game Developer for Unreal Engine and `unreal-mcp-cli` |
+| [Godot-MCP](https://github.com/IvanMurzak/Godot-MCP) | AI Game Developer for Godot and `godot-cli` |
+| [GameDev-MCP-Server](https://github.com/IvanMurzak/GameDev-MCP-Server) | The one MCP server behind all three engine plugins |
+| [ai-game.dev](https://ai-game.dev) | The cloud that connects your agent to the editor |
 
-## 🤝 Contributing
+## 🛠️ Contributing
 
-Issues and pull requests are welcome at
-**[github.com/IvanMurzak/ai-game-dev-plugin](https://github.com/IvanMurzak/ai-game-dev-plugin)**.
-Keep changes focused on the create → install → login → open → connect story, keep all JSON valid,
-run `node scripts/sync-skills.mjs --check` before committing, and match the existing skill structure.
+Issues and pull requests are welcome. Edit the canonical runbook in
+`plugins/<engine>/skills/<engine>-game-dev/SKILL.md`, then run `node scripts/sync-skills.mjs`
+(and `--check` before you commit). The layout and rules are in [`AGENTS.md`](./AGENTS.md).
 
 ## 📄 License
 
 [Apache-2.0](./LICENSE) © 2026 Ivan Murzak.
-
-<div align="center">
-<sub>Made for game developers who'd rather build than boilerplate. · <a href="https://ai-game.dev">ai-game.dev</a></sub>
-</div>

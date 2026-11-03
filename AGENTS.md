@@ -54,21 +54,13 @@ Where new files go:
 
 ## The one thing that differs per agent
 
-The runbooks are agent-neutral except the **wire-MCP** step, which selects the target by the
-assistant you are running as:
+The runbooks are agent-neutral except the **wire-MCP** step (`setup-mcp claude-code` or
+`setup-mcp codex`); see that step in each runbook for the exact per-engine form.
 
-- **Claude Code** → `npx -y <engine>-cli@latest setup-mcp claude-code "<path>"`
-- **Codex CLI** → `npx -y <engine>-cli@latest setup-mcp codex "<path>"`
+## Flow rules
 
-## Golden rules (do not reorder the flow)
-
-1. Always **`close` before `login`**, and **`open` only after a successful `login`** (the editor
-   loads the auth token at startup).
-2. Never declare success until **`wait-for-ready`** passes.
-3. `login` is **interactive** (device-code OAuth) — relay the verification URL + code to the user
-   and wait.
-4. Keep all JSON valid and keep the create → install → close → login → open → wait-for-ready →
-   wire-MCP ordering intact.
+The order is create → install → login → close → open → wait-for-ready → wire-MCP. Each runbook's
+**Golden rules** section is the one place that explains why; change the flow there, not here.
 
 ## Contributing
 

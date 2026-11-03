@@ -1,6 +1,6 @@
 ---
 name: godot-game-dev
-description: Use when the user wants to create, set up, or open a Godot project with AI assistance, install the Godot-MCP addon, or connect Godot to ai-game.dev. Covers project creation, plugin install, login, and opening the editor via godot-cli.
+description: Use when the user wants to create, set up, or open a Godot project with AI, install the Godot-MCP addon or its extensions, sign in to ai-game.dev, connect the editor, or wire Claude Code / Codex to Godot's MCP tools. Drives godot-cli end to end.
 ---
 
 # Godot — AI Game Dev runbook
@@ -13,21 +13,23 @@ build the game for them.
 Every command runs via `npx` so nothing needs to be installed globally:
 
 ```bash
-npx -y godot-cli@latest <command> [args]
+npx -y godot-cli@latest <command> [args]     # <command> --help shows every flag
 ```
 
 ## Prerequisites (check first)
 
-- **Node.js 18+** — `node --version`.
-- **Godot 4.x (.NET / Mono build)** installed — the Godot-MCP addon is C#, so use the **Mono**
-  editor, not the plain build.
-- **.NET SDK** installed — Godot C# projects require it to build (`dotnet --version`).
-- **A free ai-game.dev account** — the `login` step authorizes the project against the cloud.
+- **Node.js 20.19+ or 22.12+** — `node --version`.
+- **Godot 4.x, .NET build** — the Godot-MCP addon is C#, so use the **.NET (Mono)** editor, not the
+  standard build. The CLI finds it via `GODOT_BIN`, `PATH`, or common install folders; otherwise
+  pass `--editor-path <exe>` to `open` / `exec`.
+- **.NET SDK** — the C# project is built with `dotnet` (`dotnet --version`).
+- **A free ai-game.dev account** — the `login` step signs this machine in.
 - **Windows / macOS / Linux** with a real desktop session (the editor opens a window).
 
 ## The automatic end-to-end sequence
 
-Run these **in order**. Do not skip the ordering rule around `close → login → open`.
+Run these **in order**. The one ordering rule: the editor must **start after a successful
+`login`** (step 4).
 
 ### 1. Create the project (fresh start only)
 
@@ -37,11 +39,13 @@ Skip this step if the user already has a project — go straight to step 2 point
 npx -y godot-cli@latest create-project "C:/Games/MyGame" --dotnet --name MyGame
 ```
 
-- `create-project <path>` scaffolds a new Godot 4.x project at `<path>`.
-- `--dotnet` makes it a **C# (.NET) project** (required for the Godot-MCP addon).
-- `--name <Name>` sets the project name.
+- Scaffolds a minimal Godot 4.x project (`project.godot`, `icon.svg`) at the path; refuses to
+  overwrite an existing Godot/Unity/Unreal project.
+- `--dotnet` also scaffolds the **C# `.csproj`** — required for the addon.
+- `--name` sets the project name (defaults to the folder name).
 
-**Verify:** the `<path>` now contains `project.godot` and a `.csproj`.
+**Verify:** the path now contains `project.godot` and a `.csproj`. An existing GDScript-only
+project needs a C# project (`.csproj`) before step 2.
 
 ### 2. Install the Godot-MCP addon
 
@@ -49,111 +53,118 @@ npx -y godot-cli@latest create-project "C:/Games/MyGame" --dotnet --name MyGame
 npx -y godot-cli@latest install-plugin "C:/Games/MyGame"
 ```
 
-Installs the `godot_mcp` addon, adds the required **NuGet pins** to the project's `.csproj`, and
-enables the plugin. **Verify:** an `addons/godot_mcp/` folder exists and the plugin is listed as
-enabled in `project.godot`.
+Downloads the `godot_mcp` addon matching the CLI version into `addons/godot_mcp/`, adds its NuGet
+references to the `.csproj`, and enables it in `project.godot`. **Verify:** `addons/godot_mcp/`
+exists and `project.godot` lists the plugin under `[editor_plugins]`. Optional:
+`npx -y godot-cli@latest build "C:/Games/MyGame"` compiles the C# assembly now (`open` does it
+anyway).
 
-### 3. Close the editor before logging in
-
-```bash
-npx -y godot-cli@latest close "C:/Games/MyGame"
-# add --force if the editor won't exit cleanly
-```
-
-**This ordering is critical.** The editor must **not** be running when you log in, because it
-reads the auth token only at startup. If it is already open it would run with a stale (or
-missing) token. Always `close` before `login`. Use `--force` only if a normal close fails.
-
-### 4. Log in (interactive — device-code OAuth)
+### 3. Sign in (interactive, once per machine)
 
 ```bash
-npx -y godot-cli@latest login "C:/Games/MyGame"
+npx -y godot-cli@latest login
 ```
 
-- Starts a **device-code OAuth flow** against ai-game.dev. The command prints a **verification
-  URL** and a **user code**.
-- **Tell the user** to open the printed URL in a browser and enter the code to authorize.
-- On success the CLI persists a **cloud token** into the project so that `open --mode Cloud`
-  auto-connects.
+- Run it **without a project path**: it signs in **this machine** and stores the credential in
+  the shared machine store `~/.ai-game-dev/credentials.json`, which every engine plugin, CLI, and
+  the ai-game.dev desktop app read. (A path or `--project` would create a per-project credential
+  instead.) If the machine is already signed in it says so and exits — continue.
+- Otherwise it starts a **device-code OAuth flow** and prints a **verification URL** and a
+  **user code**. **Tell the user** to open the URL in a browser and enter the code.
 - **Wait for the command to report success** before continuing.
 
-### 5. Open the editor in Cloud mode
+### 4. (Re)start the editor in Cloud mode
 
 ```bash
-npx -y godot-cli@latest open "C:/Games/MyGame" --mode Cloud
+npx -y godot-cli@latest close "C:/Games/MyGame"   # no-op when it isn't running; --force if it hangs
+npx -y godot-cli@latest open  "C:/Games/MyGame" --mode Cloud
 ```
 
-Launches the Godot Editor. Because the project now holds a cloud token, `--mode Cloud` makes the
-addon connect to ai-game.dev on startup. Use **`--mode Cloud`** (not `--url`) to select the cloud
-connection. Run `open` **only after a successful `login`.**
+The addon reads the machine credential **once, when the editor starts**. An editor that was
+already running when you signed in keeps running without it — so `close` it, then `open`. Run
+`open` **only after a successful `login`.** `open` first builds the C# assembly (`--no-build`
+skips it), then launches the editor. `--mode Cloud` selects the ai-game.dev connection and passes
+the signed-in credential to the editor; do not use `--url` for the cloud (it sets a custom host).
 
-### 6. Confirm the connection
+### 5. Confirm the connection
 
 ```bash
 npx -y godot-cli@latest wait-for-ready "C:/Games/MyGame"
+npx -y godot-cli@latest status         "C:/Games/MyGame"
 ```
 
-Blocks until the editor has actually booted **and connected** to the cloud. **Do not tell the
-user the setup succeeded until this passes.** If it times out, see Troubleshooting.
+`wait-for-ready` polls the project's MCP server (`/api/system-tools/ping`) until it answers;
+default timeout 2 minutes (`--timeout <ms>`). `status` then reports whether a Godot editor is
+running for this project and whether the MCP server is reachable. **Do not tell the user setup
+succeeded until `wait-for-ready` passes and `status` shows the editor running.**
 
-### 7. Wire your AI assistant to the project's MCP tools
+### 6. Wire your AI assistant to the project's MCP tools
 
-Register the project's MCP server with the coding assistant you are running as, so it can call
-the engine's tools directly (create nodes, edit scenes, wire signals, etc.). Pass the target that
-matches your assistant — **`claude-code`** for Claude Code, **`codex`** for Codex CLI. Run **only**
-the line that matches you:
+Register the project's MCP server with the assistant you are running as, so it can call the
+engine's tools directly (create nodes, edit scenes, wire signals, etc.). Run **only** the line that
+matches you:
 
 ```bash
-# If you are Claude Code:
+# If you are Claude Code (writes <project>/.mcp.json):
 npx -y godot-cli@latest setup-mcp claude-code "C:/Games/MyGame"
-# If you are Codex CLI:
-npx -y godot-cli@latest setup-mcp codex        "C:/Games/MyGame"
+# If you are Codex CLI (writes <project>/.codex/config.toml):
+npx -y godot-cli@latest setup-mcp codex       "C:/Games/MyGame"
 ```
 
-The same CLI also exposes `setup-skills <claude-code|codex>` if you want to (re)install this
-runbook into the assistant's own skills directory. After wiring MCP, drive the game build through
-those tools.
+The config is pinned to this project and, in Cloud mode, carries a project key (`--oauth` writes a
+URL-only config instead; `--list` shows every agent id). The assistant loads it on its next session
+start in the project folder. Optional: `setup-skills <claude-code|codex> "<path>"` writes skill
+files for the addon's tool families into `.claude/skills` or `.agents/skills` (no editor needed).
 
-### Anytime: check status
+## Optional: extensions and `exec`
 
 ```bash
-npx -y godot-cli@latest status "C:/Games/MyGame"
+npx -y godot-cli@latest install-extension "Tilemap Tools" "C:/Games/MyGame"
+npx -y godot-cli@latest exec --path "C:/Games/MyGame" "Godot.Engine.GetVersionInfo()"
 ```
 
-Reports whether the editor is running, logged in, and connected.
+- **Extensions** add tool sets (Particles, Tilemap, Navigation, Animation, CSG, GridMap, …); the id
+  is the extension name or its package id (e.g. `com.IvanMurzak.Godot.MCP.Tilemap`). The CLI adds
+  the `<PackageReference>` to the `.csproj` and rebuilds. Install only what the game needs.
+- **`exec`** runs a C# snippet in the editor (the last expression is printed) — handy for a quick
+  check or scripted edit. With no editor open it starts a **headless** one and keeps it warm
+  (quits after 300 s idle); `close --owned-only "<path>"` stops only an editor the CLI started.
 
 ## One-shot summary
 
 ```bash
-# 1. create (fresh only)   2. install   3. close   4. login   5. open   6. verify   7. wire MCP
+# 1. create (fresh only)  2. install  3. login  4. (re)start  5. verify  6. wire MCP
 npx -y godot-cli@latest create-project "C:/Games/MyGame" --dotnet --name MyGame
-npx -y godot-cli@latest install-plugin  "C:/Games/MyGame"
-npx -y godot-cli@latest close           "C:/Games/MyGame"
-npx -y godot-cli@latest login           "C:/Games/MyGame"   # interactive: open URL + code
-npx -y godot-cli@latest open            "C:/Games/MyGame" --mode Cloud
-npx -y godot-cli@latest wait-for-ready  "C:/Games/MyGame"
-npx -y godot-cli@latest setup-mcp <your-agent> "C:/Games/MyGame"   # <your-agent> = claude-code OR codex
+npx -y godot-cli@latest install-plugin "C:/Games/MyGame"
+npx -y godot-cli@latest login                                  # interactive: URL + code
+npx -y godot-cli@latest close          "C:/Games/MyGame"
+npx -y godot-cli@latest open           "C:/Games/MyGame" --mode Cloud
+npx -y godot-cli@latest wait-for-ready "C:/Games/MyGame"
+npx -y godot-cli@latest status         "C:/Games/MyGame"
+npx -y godot-cli@latest setup-mcp <your-agent> "C:/Games/MyGame"   # claude-code OR codex
 ```
 
 ## Troubleshooting
 
-- **Build errors / addon won't load** — you're on the plain (non-Mono) Godot build or missing
-  the .NET SDK. Use the **.NET/Mono** Godot editor and install the .NET SDK, then retry.
+- **`install-plugin` warns there is no `.csproj`** — the project is GDScript-only. Create it with
+  `create-project --dotnet` (new project) or add a Godot.NET.Sdk C# project, then re-run.
+- **Build errors / addon won't load** — you're on the standard (non-.NET) Godot build or missing
+  the .NET SDK. Use the **.NET** editor and install the .NET SDK, then `build` and `open` again.
+- **Editor not found** — set `GODOT_BIN` or pass `--editor-path <exe>` to `open`.
 - **`login` never completes** — the user has not finished the browser step. Re-print the
-  verification URL and user code and wait. Ensure the ai-game.dev account is verified.
-- **`open` connects locally / not to Cloud** — login didn't persist, or you passed `--url`
-  instead of `--mode Cloud`. `close`, re-run `login`, then `open --mode Cloud` again.
+  verification URL and code and wait. Ensure the ai-game.dev account is verified.
+- **Wrong account / need to sign in again** — `login --force` (add `--yes` to confirm switching
+  accounts), then `close` + `open --mode Cloud`.
+- **Editor connects locally / not to Cloud** — it started before `login`, or was opened with `--url`.
+  `close`, then `open --mode Cloud`.
 - **`wait-for-ready` times out** — Godot may still be restoring NuGet packages / building C# on
-  first launch. Wait and re-run. Check `status`.
-- **Editor won't close** — add `--force` to `close`.
-- **Editor opened before login** — `close` it, run `login`, then `open --mode Cloud` again so the
-  fresh token is picked up at startup.
+  first launch. Re-run with a longer `--timeout`, and check `status`.
 
 ## Golden rules
 
-1. Always **`close` before `login`**, and **`open` only after a successful `login`**.
+1. **`login` before the editor starts**; if it was already open, `close` then `open` it.
 2. Never declare success until **`wait-for-ready`** passes.
-3. Use the **.NET/Mono** Godot build; C# projects need the **.NET SDK**.
+3. Use the **.NET** Godot build and a **C# project**; the build needs the **.NET SDK**.
 4. Select the cloud connection with **`--mode Cloud`** — not `--url`.
 
 Learn more at **[ai-game.dev](https://ai-game.dev)**.

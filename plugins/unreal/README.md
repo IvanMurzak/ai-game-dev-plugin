@@ -33,10 +33,7 @@ confirm the connection — no manual CLI juggling.
 
 ```bash
 codex plugin marketplace add IvanMurzak/ai-game-dev-plugin
-```
-
-```text
-/plugin install unreal@ai-game-dev-plugin
+codex plugin add unreal@ai-game-dev-plugin
 ```
 
 ## What the AI will do automatically

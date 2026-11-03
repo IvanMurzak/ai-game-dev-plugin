@@ -49,11 +49,10 @@ in **Claude Code** and **OpenAI Codex** from the same source.
 
 ```bash
 codex plugin marketplace add IvanMurzak/ai-game-dev-plugin
+codex plugin add unity@ai-game-dev-plugin
 ```
 
-```text
-/plugin install unity@ai-game-dev-plugin
-```
+Or open `/plugins` inside Codex and install from the plugin browser.
 
 Swap `unity` for `unreal` or `godot`, or install all three. Then just ask:
 
@@ -76,7 +75,7 @@ Codex users can also point at the generated copies in [`.agents/skills/`](./.age
 
 ## 🎮 The plugins
 
-| Engine | Install | Drives the CLI | Engine plugin |
+| Engine | Install (Claude Code) | Drives the CLI | Engine plugin |
 | ------ | ------- | -------------- | ------------- |
 | <img src="https://cdn.simpleicons.org/unity/white" height="16" alt="" /> **Unity** | `/plugin install unity@ai-game-dev-plugin` | [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) | [Unity-MCP](https://github.com/IvanMurzak/Unity-MCP) |
 | <img src="https://cdn.simpleicons.org/unrealengine/white" height="16" alt="" /> **Unreal Engine** | `/plugin install unreal@ai-game-dev-plugin` | [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) | [Unreal-MCP](https://github.com/IvanMurzak/Unreal-MCP) |

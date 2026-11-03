@@ -32,10 +32,7 @@ auto-connects in Cloud mode), and confirm the connection — no manual CLI juggl
 
 ```bash
 codex plugin marketplace add IvanMurzak/ai-game-dev-plugin
-```
-
-```text
-/plugin install unity@ai-game-dev-plugin
+codex plugin add unity@ai-game-dev-plugin
 ```
 
 ## What the AI will do automatically

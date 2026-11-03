@@ -83,7 +83,7 @@ for (const { engine, canonical, generated } of SKILLS) {
 
 // Plugin versions: one release version shared by every manifest and catalog entry.
 const versions = new Map();
-const marketplace = JSON.parse(read(join('.claude-plugin', 'marketplace.json')));
+const marketplace = JSON.parse(read(join('.claude-plugin', 'marketplace.json'))); // throws (exit 1) if missing
 for (const p of marketplace.plugins) versions.set(`.claude-plugin/marketplace.json (${p.name})`, p.version);
 for (const engine of ENGINES) {
   for (const dir of ['.claude-plugin', '.codex-plugin']) {
@@ -91,8 +91,9 @@ for (const engine of ENGINES) {
     versions.set(rel, JSON.parse(read(rel)).version);
   }
 }
-if (new Set(versions.values()).size !== 1) {
-  console.error('[sync-skills] VERSION MISMATCH: every plugin version must be equal:');
+const distinct = new Set(versions.values());
+if (distinct.size !== 1 || typeof [...distinct][0] !== 'string') {
+  console.error('[sync-skills] VERSION MISMATCH: every plugin needs the same "version" string:');
   for (const [file, version] of versions) console.error(`  ${version}  ${file}`);
   drift++;
 } else {

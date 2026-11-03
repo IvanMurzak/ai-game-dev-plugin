@@ -70,6 +70,8 @@ for (const engine of ENGINES) {
     const rel = join('plugins', `${engine}-mcp`, dir, 'plugin.json');
     versions.set(rel, readJson(rel).version);
   }
+  const open = join('plugins', `${engine}-mcp`, 'plugin.json'); // Agent Plugins open standard
+  versions.set(open, readJson(open).version);
 }
 versions.set('gemini-extension.json', readJson('gemini-extension.json').version);
 

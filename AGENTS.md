@@ -27,6 +27,7 @@ plugins/<engine>-mcp/
   .claude-plugin/plugin.json               # Claude Code plugin manifest
   .codex-plugin/plugin.json                # Codex plugin manifest
   .cursor-plugin/plugin.json               # Cursor plugin manifest (logo: assets/logo.png)
+  plugin.json                              # Agent Plugins open-standard manifest (GitHub Copilot)
   skills/<engine>-game-dev/SKILL.md        # CANONICAL runbook, shared by every agent
   assets/logo.png                          # plugin logo (copy of the root assets/logo.png)
   README.md                                # per-plugin readme (agent-neutral)

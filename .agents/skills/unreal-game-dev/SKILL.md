@@ -1,11 +1,11 @@
 ---
 name: unreal-game-dev
-description: Use when the user wants to create, set up, or open an Unreal Engine project with AI, install the Unreal-MCP plugin or its extensions, sign in to ai-game.dev, connect the editor, or wire Claude Code / Codex to Unreal's MCP tools. Drives unreal-mcp-cli end to end.
+description: Use when the user wants to create, set up, or open an Unreal Engine project with AI, install the Unreal-MCP plugin or its extensions, sign in to ai-game.dev, connect the editor, or wire your coding agent (Claude Code, Codex, Cursor, Gemini CLI) to Unreal's MCP tools. Drives unreal-mcp-cli end to end.
 ---
 
 # Unreal Engine — AI Game Dev runbook
 
-This skill teaches your AI coding assistant (Claude Code or Codex CLI) to drive **Unreal
+This skill teaches your AI coding assistant (Claude Code, Codex, Cursor or Gemini CLI) to drive **Unreal
 Engine** fully automatically through the `unreal-mcp-cli` npm package. The goal: take the user
 from nothing to a running Unreal Editor that is **connected to [ai-game.dev](https://ai-game.dev)**
 so the AI can build the game for them.
@@ -115,20 +115,27 @@ the user setup succeeded until `wait-for-ready` passes.**
 ### 6. Wire your AI assistant to the project's MCP tools
 
 Register the project's MCP server with the assistant you are running as, so it can call the
-engine's tools directly (spawn actors, edit the level, run Blueprints, etc.). Run **only** the line
-that matches you:
+engine's tools directly (spawn actors, edit the level, run Blueprints, etc.):
 
 ```bash
-# If you are Claude Code (writes <project>/.mcp.json):
-npx -y unreal-mcp-cli@latest setup-mcp claude-code -p "C:/Games/MyGame"
-# If you are Codex CLI (writes <project>/.codex/config.toml):
-npx -y unreal-mcp-cli@latest setup-mcp codex       -p "C:/Games/MyGame"
+# Pick the id of the agent you are running as (writes the file shown):
+#   claude-code -> .mcp.json        codex  -> .codex/config.toml
+#   cursor      -> .cursor/mcp.json gemini -> .gemini/settings.json
+npx -y unreal-mcp-cli@latest setup-mcp <agent-id> -p "C:/Games/MyGame"
 ```
 
 The config is pinned to this project and, in Cloud mode, carries a project key (`--oauth` writes a
 URL-only config instead; `--dry-run` prints it; `--list` shows every agent id). The assistant loads
-it on its next session start in the project folder. `setup-skills -p "<path>"` only writes a
-**Claude Code** skill stub (`.claude/skills/unreal-mcp/SKILL.md`); it has no Codex target.
+it on its next session start in the project folder.
+
+### 7. Generate the project's skills (Claude Code only, optional)
+
+```bash
+npx -y unreal-mcp-cli@latest setup-skills -p "C:/Games/MyGame"
+```
+
+Writes a Claude Code skill (`.claude/skills/unreal-mcp/SKILL.md`) that drives this project's MCP
+server. Other agents have no skills target yet; the MCP tools from step 6 are enough.
 
 ## Optional: extensions and `exec`
 
@@ -156,7 +163,7 @@ npx -y unreal-mcp-cli@latest login                                   # interacti
 npx -y unreal-mcp-cli@latest close          "C:/Games/MyGame"
 npx -y unreal-mcp-cli@latest open           "C:/Games/MyGame" --connection-mode Cloud
 npx -y unreal-mcp-cli@latest wait-for-ready -p "C:/Games/MyGame" --timeout 600000
-npx -y unreal-mcp-cli@latest setup-mcp <your-agent> -p "C:/Games/MyGame"   # claude-code OR codex
+npx -y unreal-mcp-cli@latest setup-mcp <agent-id> -p "C:/Games/MyGame"   # claude-code | codex | cursor | gemini
 ```
 
 ## Troubleshooting

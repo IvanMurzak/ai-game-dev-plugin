@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "unreal",
+      "name": "unreal-mcp",
       "source": {
         "source": "local",
-        "path": "./plugins/unreal"
+        "path": "./plugins/unreal-mcp"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -17,10 +17,10 @@
       "category": "Coding"
     },
     {
-      "name": "unity",
+      "name": "unity-mcp",
       "source": {
         "source": "local",
-        "path": "./plugins/unity"
+        "path": "./plugins/unity-mcp"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -29,10 +29,10 @@
       "category": "Coding"
     },
     {
-      "name": "godot",
+      "name": "godot-mcp",
       "source": {
         "source": "local",
-        "path": "./plugins/godot"
+        "path": "./plugins/godot-mcp"
       },
       "policy": {
         "installation": "AVAILABLE",

@@ -12,50 +12,57 @@ teaches the agent to drive that engine's official npm CLI (`unreal-mcp-cli`, `un
 [ai-game.dev](https://ai-game.dev)** — creating the project, installing the engine plugin, logging
 in, and opening the editor, automatically.
 
-It targets **both Claude Code and Codex CLI** from one source tree.
+It targets **Claude Code, Codex, Cursor and Gemini CLI** from one source tree.
 
 ## Layout
 
 ```
-.claude-plugin/marketplace.json          # Claude Code marketplace catalog
-.agents/plugins/marketplace.json         # Codex marketplace catalog
-.agents/skills/<engine>-game-dev/SKILL.md# Codex repo-native skills (GENERATED — do not hand-edit)
-plugins/<engine>/
-  .claude-plugin/plugin.json             # Claude Code plugin manifest
-  .codex-plugin/plugin.json              # Codex plugin manifest
-  skills/<engine>-game-dev/SKILL.md      # CANONICAL runbook (shared by both agents' plugins)
-  README.md                              # per-plugin readme (agent-neutral)
-scripts/sync-skills.mjs                  # regenerates .agents/skills/ from the canonical skills
-assets/                                  # README images (banner)
+.claude-plugin/marketplace.json            # Claude Code marketplace catalog
+.agents/plugins/marketplace.json           # Codex marketplace catalog
+.cursor-plugin/marketplace.json            # Cursor marketplace catalog
+gemini-extension.json                      # Gemini CLI extension (the whole repo is one extension)
+.agents/skills/<engine>-game-dev/SKILL.md  # Codex repo-native skills (GENERATED, do not hand-edit)
+skills/<engine>-game-dev/SKILL.md          # Gemini extension skills (GENERATED, do not hand-edit)
+plugins/<engine>-mcp/
+  .claude-plugin/plugin.json               # Claude Code plugin manifest
+  .codex-plugin/plugin.json                # Codex plugin manifest
+  .cursor-plugin/plugin.json               # Cursor plugin manifest (logo: assets/logo.png)
+  skills/<engine>-game-dev/SKILL.md        # CANONICAL runbook, shared by every agent
+  assets/logo.png                          # plugin logo (copy of the root assets/logo.png)
+  README.md                                # per-plugin readme (agent-neutral)
+scripts/sync-skills.mjs                    # regenerates the skill copies, checks versions
+assets/                                    # README images (banner, demo, logo)
 ```
 
-`<engine>` is one of `unreal`, `unity`, `godot`.
+`<engine>` is one of `unreal`, `unity`, `godot`; plugin names are `<engine>-mcp`.
 
 Where new files go:
-- Runbook changes: only the canonical `plugins/<engine>/skills/<engine>-game-dev/SKILL.md`, then sync.
-- A new engine plugin: `plugins/<engine>/` with the same shape, registered in **both** marketplace
-  catalogs and in the `ENGINES` list of `scripts/sync-skills.mjs`.
-- Everything under `plugins/<engine>/` ships to users; keep repo-only notes out of it.
+- Runbook changes: only the canonical `plugins/<engine>-mcp/skills/<engine>-game-dev/SKILL.md`, then sync.
+- A new engine plugin: `plugins/<engine>-mcp/` with the same shape, registered in **all three**
+  marketplace catalogs and in the `ENGINES` list of `scripts/sync-skills.mjs`.
+- Everything under `plugins/<engine>-mcp/` ships to users; keep repo-only notes out of it.
+- A release bumps every `version` (catalog entries, plugin manifests, `gemini-extension.json`);
+  `sync-skills.mjs --check` fails if one is missed.
 - Maintenance scripts: `scripts/` (dependency-free, Node 18+).
 
 ## Single source of truth for the skill bodies
 
-- The **canonical** runbook for each engine is `plugins/<engine>/skills/<engine>-game-dev/SKILL.md`.
-  Both plugin manifests (`.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`) reference the
-  plugin's own `./skills/` directory, so the two agent bundles share that one file — no second copy.
-- The repo-native Codex discovery copies under `.agents/skills/` are **generated** from the
-  canonical files by `scripts/sync-skills.mjs`. **Never hand-edit `.agents/skills/`.**
+- The **canonical** runbook for each engine is `plugins/<engine>-mcp/skills/<engine>-game-dev/SKILL.md`.
+  The Claude Code, Codex and Cursor plugins all load the plugin's own `skills/` directory, so they
+  share that one file.
+- The copies under `.agents/skills/` (Codex) and `skills/` (Gemini CLI) are **generated** by
+  `scripts/sync-skills.mjs`. **Never hand-edit them.**
 - After editing any canonical `SKILL.md`, run:
 
   ```bash
-  node scripts/sync-skills.mjs          # regenerate the .agents/skills/ copies
+  node scripts/sync-skills.mjs          # regenerate the generated copies
   node scripts/sync-skills.mjs --check  # verify no drift (exits non-zero on drift)
   ```
 
 ## The one thing that differs per agent
 
-The runbooks are agent-neutral except the **wire-MCP** step (`setup-mcp claude-code` or
-`setup-mcp codex`); see that step in each runbook for the exact per-engine form.
+The runbooks are agent-neutral except the agent id in the **wire-MCP** and **skills** steps
+(`claude-code`, `codex`, `cursor`, `gemini`); see those steps in each runbook.
 
 ## Flow rules
 

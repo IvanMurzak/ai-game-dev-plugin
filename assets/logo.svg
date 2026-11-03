@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="AI Game Dev">
+  <rect width="256" height="256" rx="48" fill="#0b0e12"/>
+  <rect x="44" y="52" width="76" height="12" rx="3" fill="#ffdc00"/>
+  <text x="40" y="168" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="120" letter-spacing="-4" fill="#ff1a2e">AI</text>
+  <text x="44" y="210" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="30" letter-spacing="1" fill="#ffffff">GAME DEV</text>
+</svg>

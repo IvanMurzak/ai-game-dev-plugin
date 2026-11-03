@@ -14,11 +14,13 @@
 [![License](https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&labelColor=333A41)](./LICENSE)
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
-<img src="./assets/banner.png" alt="AI Game Dev: plugins and skills for Claude Code and Codex. Build games in Unity, Unreal and Godot with AI." width="100%" />
+<img src="./assets/banner.png" alt="AI Game Dev: plugins and skills for AI coding agents. Build games in Unity, Unreal and Godot with AI." width="100%" />
 
 <p>
   <a href="https://code.claude.com/docs/en/plugins"><img src="https://github.com/IvanMurzak/Unity-MCP/raw/main/docs/img/mcp-clients/claude-64.png" alt="Claude Code" title="Claude Code" height="36"></a>&nbsp;&nbsp;
-  <a href="https://developers.openai.com/codex/"><img src="https://github.com/IvanMurzak/Unity-MCP/raw/main/docs/img/mcp-clients/codex-64.png" alt="Codex" title="Codex" height="36"></a>
+  <a href="https://developers.openai.com/codex/"><img src="https://github.com/IvanMurzak/Unity-MCP/raw/main/docs/img/mcp-clients/codex-64.png" alt="Codex" title="Codex" height="36"></a>&nbsp;&nbsp;
+  <a href="https://cursor.com/docs/plugins"><img src="https://github.com/IvanMurzak/Unity-MCP/raw/main/docs/img/mcp-clients/cursor-64.png" alt="Cursor" title="Cursor" height="36"></a>&nbsp;&nbsp;
+  <a href="https://geminicli.com/docs/extensions/"><img src="https://github.com/IvanMurzak/Unity-MCP/raw/main/docs/img/mcp-clients/gemini-64.png" alt="Gemini CLI" title="Gemini CLI" height="36"></a>
 </p>
 
 </div>
@@ -28,7 +30,7 @@ the AI Game Developer plugin, signs you in to [ai-game.dev](https://ai-game.dev)
 and connects its MCP tools. From there the agent builds the game inside your real editor.
 
 One plugin per engine (**Unity**, **Unreal Engine**, **Godot**), each a single **skill** that works
-in **Claude Code** and **OpenAI Codex** from the same source.
+in **Claude Code**, **OpenAI Codex**, **Cursor** and **Gemini CLI** from the same source.
 
 <div align="center">
   <img src="./assets/demo.svg" alt="Demo: the agent creates a Unity project, installs the plugin, signs in to ai-game.dev, opens the editor and wires MCP tools." width="100%" />
@@ -42,44 +44,67 @@ in **Claude Code** and **OpenAI Codex** from the same source.
 
 ```text
 /plugin marketplace add IvanMurzak/ai-game-dev-plugin
-/plugin install unity@ai-game-dev-plugin
+/plugin install unity-mcp@ai-game-dev-plugin
 ```
 
 ### OpenAI Codex
 
 ```bash
 codex plugin marketplace add IvanMurzak/ai-game-dev-plugin
-codex plugin add unity@ai-game-dev-plugin
+codex plugin add unity-mcp@ai-game-dev-plugin
 ```
 
 Or open `/plugins` inside Codex and install from the plugin browser.
 
-Swap `unity` for `unreal` or `godot`, or install all three. Then just ask:
+### Cursor
+
+Open **Customize**, choose **From GitHub Repository** and enter
+`https://github.com/IvanMurzak/ai-game-dev-plugin`, then install `unity-mcp`.
+
+Swap `unity-mcp` for `unreal-mcp` or `godot-mcp`, or install all three.
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin
+```
+
+The extension carries all three engine skills.
+
+### Any agent with skills (`npx skills`)
+
+```bash
+npx skills add IvanMurzak/ai-game-dev-plugin
+```
+
+Then just ask:
 
 > _"Make a new Unity game and connect it to ai-game.dev."_
 
 <details>
-<summary><b>Skills only, without the plugin</b></summary>
+<summary><b>Copy the skills by hand</b></summary>
 
-Each runbook is a plain [`SKILL.md`](./plugins). Copy a `<engine>-game-dev` folder into your
-agent's skills directory:
+Each runbook is a plain `SKILL.md` in [`skills/`](./skills). Copy a `<engine>-game-dev` folder
+into your agent's skills directory:
 
 | Agent | Project skills | Personal skills |
 | ----- | -------------- | --------------- |
 | Claude Code | `.claude/skills/` | `~/.claude/skills/` |
 | Codex | `.agents/skills/` | `~/.agents/skills/` |
+| Cursor | `.cursor/skills/` | `~/.cursor/skills/` |
+| Gemini CLI | `.gemini/skills/` | `~/.gemini/skills/` |
 
-Codex users can also point at the generated copies in [`.agents/skills/`](./.agents/skills).
+Cursor and Gemini CLI also read `.agents/skills/` and `~/.agents/skills/`.
 
 </details>
 
 ## 🎮 The plugins
 
-| Engine | Install (Claude Code) | Drives the CLI | Engine plugin |
-| ------ | ------- | -------------- | ------------- |
-| <img src="https://cdn.simpleicons.org/unity/white" height="16" alt="" /> **Unity** | `/plugin install unity@ai-game-dev-plugin` | [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) | [Unity-MCP](https://github.com/IvanMurzak/Unity-MCP) |
-| <img src="https://cdn.simpleicons.org/unrealengine/white" height="16" alt="" /> **Unreal Engine** | `/plugin install unreal@ai-game-dev-plugin` | [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) | [Unreal-MCP](https://github.com/IvanMurzak/Unreal-MCP) |
-| <img src="https://cdn.simpleicons.org/godotengine/478CBF" height="16" alt="" /> **Godot** | `/plugin install godot@ai-game-dev-plugin` | [`godot-cli`](https://www.npmjs.com/package/godot-cli) | [Godot-MCP](https://github.com/IvanMurzak/Godot-MCP) |
+| Engine | Plugin | Drives the CLI | Engine plugin |
+| ------ | ------ | -------------- | ------------- |
+| <img src="https://cdn.simpleicons.org/unity/white" height="16" alt="" /> **Unity** | `unity-mcp` | [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) | [Unity-MCP](https://github.com/IvanMurzak/Unity-MCP) |
+| <img src="https://cdn.simpleicons.org/unrealengine/white" height="16" alt="" /> **Unreal Engine** | `unreal-mcp` | [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) | [Unreal-MCP](https://github.com/IvanMurzak/Unreal-MCP) |
+| <img src="https://cdn.simpleicons.org/godotengine/478CBF" height="16" alt="" /> **Godot** | `godot-mcp` | [`godot-cli`](https://www.npmjs.com/package/godot-cli) | [Godot-MCP](https://github.com/IvanMurzak/Godot-MCP) |
 
 The skill activates by itself when you ask to create, set up or open a project for its engine.
 
@@ -93,13 +118,13 @@ Every step runs through `npx -y <engine-cli>@latest`, so nothing is installed gl
    You sign in once per machine.
 4. **Restart** the editor (close, then open) so it picks up the sign-in and connects to ai-game.dev.
 5. **Verify** the editor is ready and connected. The agent does not report success before that.
-6. **Wire MCP**: register the project's tools with your agent (`setup-mcp claude-code` or
-   `setup-mcp codex`), so it can build the game: scenes, objects, scripts, tests and screenshots.
+6. **Wire MCP**: register the project's tools with your agent (`setup-mcp <agent-id>`:
+   `claude-code`, `codex`, `cursor` or `gemini`), so it can build the game: scenes, objects, scripts, tests and screenshots.
 
 The exact commands, checks and fixes for each engine are in its runbook:
-[Unity](./plugins/unity/skills/unity-game-dev/SKILL.md) ·
-[Unreal](./plugins/unreal/skills/unreal-game-dev/SKILL.md) ·
-[Godot](./plugins/godot/skills/godot-game-dev/SKILL.md).
+[Unity](./plugins/unity-mcp/skills/unity-game-dev/SKILL.md) ·
+[Unreal](./plugins/unreal-mcp/skills/unreal-game-dev/SKILL.md) ·
+[Godot](./plugins/godot-mcp/skills/godot-game-dev/SKILL.md).
 
 ## ✅ Requirements
 
@@ -121,7 +146,7 @@ The exact commands, checks and fixes for each engine are in its runbook:
 ## 🛠️ Contributing
 
 Issues and pull requests are welcome. Edit the canonical runbook in
-`plugins/<engine>/skills/<engine>-game-dev/SKILL.md`, then run `node scripts/sync-skills.mjs`
+`plugins/<engine>-mcp/skills/<engine>-game-dev/SKILL.md`, then run `node scripts/sync-skills.mjs`
 (and `--check` before you commit). The layout and rules are in [`AGENTS.md`](./AGENTS.md).
 
 ## 📄 License

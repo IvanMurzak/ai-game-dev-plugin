@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" fill="none" role="img" aria-label="AI Game Developer: plugins and skills for Claude Code and Codex. Build games in Unity, Unreal and Godot with AI.">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" fill="none" role="img" aria-label="AI Game Developer: plugins and skills for AI coding agents. Build games in Unity, Unreal and Godot with AI.">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#07090c"/>
@@ -61,7 +61,7 @@
   <g font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-weight="800">
     <text x="60" y="190" font-size="128" fill="#ff1a2e" letter-spacing="-2">AI</text>
     <text x="232" y="190" font-size="128" fill="#ffffff" letter-spacing="-3">Game Dev</text>
-    <text x="64" y="252" font-size="40" fill="#ffffff" fill-opacity="0.92" letter-spacing="-0.5">Plugins &amp; Skills for Claude Code and Codex</text>
+    <text x="64" y="252" font-size="40" fill="#ffffff" fill-opacity="0.92" letter-spacing="-0.5">Plugins &amp; Skills for AI coding agents</text>
   </g>
 
   <!-- engines -->
@@ -91,7 +91,7 @@
     <circle cx="58" cy="20" r="5" fill="#28c840"/>
     <path d="M0 38h312" stroke="#ffffff" stroke-opacity="0.1"/>
     <g font-family="'SF Mono','Menlo','Consolas',monospace" font-size="13.5" xml:space="preserve">
-      <text x="18" y="66" fill="#ff1a2e">&gt;<tspan fill="#ffffff"> /plugin install unity@</tspan></text>
+      <text x="18" y="66" fill="#ff1a2e">&gt;<tspan fill="#ffffff"> /plugin install unity-mcp@</tspan></text>
       <text x="32" y="86" fill="#ffffff">ai-game-dev-plugin</text>
       <text x="18" y="116" fill="#3ad6e0">✓ <tspan fill="#c9d1d9">project created</tspan></text>
       <text x="18" y="138" fill="#3ad6e0">✓ <tspan fill="#c9d1d9">plugin installed</tspan></text>

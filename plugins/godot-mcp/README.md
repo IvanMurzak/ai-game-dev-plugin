@@ -1,6 +1,6 @@
 # Godot — AI Game Dev (Claude Code, Codex, Cursor and Gemini CLI)
 
-Teach your AI coding agent — **Claude Code** or **OpenAI Codex CLI** — to drive **Godot** end to end
+Teach your AI coding agent — **Claude Code**, **OpenAI Codex**, **Cursor** or **Gemini CLI** — to drive **Godot** end to end
 through the [`godot-cli`](https://www.npmjs.com/package/godot-cli) npm package, so you can build a
 game in Godot by just asking. Part of the
 [`ai-game-dev-plugin`](https://github.com/IvanMurzak/ai-game-dev-plugin) marketplace and a front

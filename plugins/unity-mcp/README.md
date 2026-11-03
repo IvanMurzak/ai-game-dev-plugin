@@ -1,6 +1,6 @@
 # Unity — AI Game Dev (Claude Code, Codex, Cursor and Gemini CLI)
 
-Teach your AI coding agent — **Claude Code** or **OpenAI Codex CLI** — to drive **Unity** end to end
+Teach your AI coding agent — **Claude Code**, **OpenAI Codex**, **Cursor** or **Gemini CLI** — to drive **Unity** end to end
 through the [`unity-mcp-cli`](https://www.npmjs.com/package/unity-mcp-cli) npm package, so you can
 build a game in Unity by just asking. Part of the
 [`ai-game-dev-plugin`](https://github.com/IvanMurzak/ai-game-dev-plugin) marketplace and a front

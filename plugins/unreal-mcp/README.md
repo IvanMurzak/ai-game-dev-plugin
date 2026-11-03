@@ -1,6 +1,6 @@
 # Unreal Engine — AI Game Dev (Claude Code, Codex, Cursor and Gemini CLI)
 
-Teach your AI coding agent — **Claude Code** or **OpenAI Codex CLI** — to drive **Unreal Engine**
+Teach your AI coding agent — **Claude Code**, **OpenAI Codex**, **Cursor** or **Gemini CLI** — to drive **Unreal Engine**
 end to end through the [`unreal-mcp-cli`](https://www.npmjs.com/package/unreal-mcp-cli) npm package,
 so you can build a game in Unreal by just asking. Part of the
 [`ai-game-dev-plugin`](https://github.com/IvanMurzak/ai-game-dev-plugin) marketplace and a front

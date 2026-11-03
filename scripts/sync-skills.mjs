@@ -2,7 +2,7 @@
 // sync-skills.mjs — single source of truth for the engine runbooks.
 //
 // The canonical skill body for each engine lives at
-//   plugins/<engine>/skills/<engine>-game-dev/SKILL.md
+//   plugins/<engine>-mcp/skills/<engine>-game-dev/SKILL.md
 // That same file is what BOTH agent plugins ship: the Claude Code plugin
 // (.claude-plugin/plugin.json) and the Codex plugin (.codex-plugin/plugin.json)
 // each reference the plugin's own ./skills/ directory, so the plugin bundles never
@@ -17,9 +17,9 @@
 //   node scripts/sync-skills.mjs            # write/refresh the .agents/skills copies
 //   node scripts/sync-skills.mjs --check    # verify the copies are in sync; exit 1 on drift
 //
-// Both modes also check that every plugin version (the 3 entries in
-// .claude-plugin/marketplace.json and the 6 plugin.json manifests) is the same, so a
-// release bump can't miss a file.
+// Both modes also check that every version (the 3 entries in .claude-plugin/marketplace.json,
+// the 9 plugin.json manifests and gemini-extension.json) is the same, so a release bump can't
+// miss a file.
 //
 // Dependency-free (Node 18+, ESM). Safe to run in CI as a drift guard.
 
@@ -30,14 +30,18 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..');
 
-// One entry per engine skill. `canonical` is the source of truth; `generated` is the
-// repo-native Codex discovery copy that must stay byte-identical to it.
+// One entry per engine skill. `canonical` is the source of truth; each `generated` path is a
+// discovery copy that must stay byte-identical to it: `.agents/skills/` for Codex and the
+// repo-root `skills/` for the Gemini CLI extension (gemini-extension.json lives at the root).
 const ENGINES = ['unreal', 'unity', 'godot'];
-const SKILLS = ENGINES.map((engine) => ({
-  engine,
-  canonical: join('plugins', engine, 'skills', `${engine}-game-dev`, 'SKILL.md'),
-  generated: join('.agents', 'skills', `${engine}-game-dev`, 'SKILL.md'),
-}));
+const SKILLS = ENGINES.flatMap((engine) => {
+  const canonical = join('plugins', `${engine}-mcp`, 'skills', `${engine}-game-dev`, 'SKILL.md');
+  return ['.agents/skills', 'skills'].map((root) => ({
+    engine,
+    canonical,
+    generated: join(root, `${engine}-game-dev`, 'SKILL.md'),
+  }));
+});
 
 const checkMode = process.argv.includes('--check');
 
@@ -86,11 +90,12 @@ const versions = new Map();
 const marketplace = JSON.parse(read(join('.claude-plugin', 'marketplace.json'))); // throws (exit 1) if missing
 for (const p of marketplace.plugins) versions.set(`.claude-plugin/marketplace.json (${p.name})`, p.version);
 for (const engine of ENGINES) {
-  for (const dir of ['.claude-plugin', '.codex-plugin']) {
-    const rel = join('plugins', engine, dir, 'plugin.json');
+  for (const dir of ['.claude-plugin', '.codex-plugin', '.cursor-plugin']) {
+    const rel = join('plugins', `${engine}-mcp`, dir, 'plugin.json');
     versions.set(rel, JSON.parse(read(rel)).version);
   }
 }
+versions.set('gemini-extension.json', JSON.parse(read('gemini-extension.json')).version);
 const distinct = new Set(versions.values());
 if (distinct.size !== 1 || typeof [...distinct][0] !== 'string') {
   console.error('[sync-skills] VERSION MISMATCH: every plugin needs the same "version" string:');

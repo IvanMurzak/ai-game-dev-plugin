@@ -1,0 +1,24 @@
+{
+  "name": "ai-game-dev-plugin",
+  "owner": {
+    "name": "Ivan Murzak",
+    "url": "https://ai-game.dev"
+  },
+  "plugins": [
+    {
+      "name": "unity-mcp",
+      "source": "plugins/unity-mcp",
+      "description": "Drive Unity with your AI agent via unity-mcp-cli: create a project, install the plugin, log in, and open the editor automatically."
+    },
+    {
+      "name": "unreal-mcp",
+      "source": "plugins/unreal-mcp",
+      "description": "Drive Unreal Engine with your AI agent via unreal-mcp-cli: create a project, install the plugin, log in, and open the editor automatically."
+    },
+    {
+      "name": "godot-mcp",
+      "source": "plugins/godot-mcp",
+      "description": "Drive Godot with your AI agent via godot-cli: create a project, install the plugin, log in, and open the editor automatically."
+    }
+  ]
+}

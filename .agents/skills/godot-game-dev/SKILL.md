@@ -1,11 +1,11 @@
 ---
 name: godot-game-dev
-description: Use when the user wants to create, set up, or open a Godot project with AI, install the Godot-MCP addon or its extensions, sign in to ai-game.dev, connect the editor, or wire Claude Code / Codex to Godot's MCP tools. Drives godot-cli end to end.
+description: Use when the user wants to create, set up, or open a Godot project with AI, install the Godot-MCP addon or its extensions, sign in to ai-game.dev, connect the editor, or wire your coding agent (Claude Code, Codex, Cursor, Gemini CLI) to Godot's MCP tools. Drives godot-cli end to end.
 ---
 
 # Godot — AI Game Dev runbook
 
-This skill teaches your AI coding assistant (Claude Code or Codex CLI) to drive **Godot** fully
+This skill teaches your AI coding assistant (Claude Code, Codex, Cursor or Gemini CLI) to drive **Godot** fully
 automatically through the `godot-cli` npm package. The goal: take the user from nothing to a
 running Godot Editor that is **connected to [ai-game.dev](https://ai-game.dev)** so the AI can
 build the game for them.
@@ -101,20 +101,29 @@ succeeded until `wait-for-ready` passes and `status` shows the editor running.**
 ### 6. Wire your AI assistant to the project's MCP tools
 
 Register the project's MCP server with the assistant you are running as, so it can call the
-engine's tools directly (create nodes, edit scenes, wire signals, etc.). Run **only** the line that
-matches you:
+engine's tools directly (create nodes, edit scenes, wire signals, etc.). Use the agent id that matches you:
 
 ```bash
-# If you are Claude Code (writes <project>/.mcp.json):
-npx -y godot-cli@latest setup-mcp claude-code "C:/Games/MyGame"
-# If you are Codex CLI (writes <project>/.codex/config.toml):
-npx -y godot-cli@latest setup-mcp codex       "C:/Games/MyGame"
+# Pick the id of the agent you are running as (writes the file shown):
+#   claude-code -> .mcp.json        codex  -> .codex/config.toml
+#   cursor      -> .cursor/mcp.json gemini -> .gemini/settings.json
+npx -y godot-cli@latest setup-mcp <agent-id> "C:/Games/MyGame"
 ```
 
 The config is pinned to this project and, in Cloud mode, carries a project key (`--oauth` writes a
 URL-only config instead; `--list` shows every agent id). The assistant loads it on its next session
-start in the project folder. Optional: `setup-skills <claude-code|codex> "<path>"` writes skill
-files for the addon's tool families into `.claude/skills` or `.agents/skills` (no editor needed).
+start in the project folder.
+
+### 7. Generate the project's skills (recommended)
+
+```bash
+npx -y godot-cli@latest setup-skills <agent-id> "C:/Games/MyGame"
+```
+
+The Godot plugin generates skills for the tools this project actually has (engine version,
+installed extensions) and writes them where your agent reads skills: `.claude/skills`,
+`.agents/skills`, `.cursor/skills` or `.gemini/skills` (no editor needed). This runbook only gets the
+project connected; those generated skills teach you the engine's tools in depth.
 
 ## Optional: extensions and `exec`
 
@@ -133,7 +142,7 @@ npx -y godot-cli@latest exec --path "C:/Games/MyGame" "Godot.Engine.GetVersionIn
 ## One-shot summary
 
 ```bash
-# 1. create (fresh only)  2. install  3. login  4. (re)start  5. verify  6. wire MCP
+# 1. create (fresh only)  2. install  3. login  4. (re)start  5. verify  6. wire MCP  7. skills
 npx -y godot-cli@latest create-project "C:/Games/MyGame" --dotnet --name MyGame
 npx -y godot-cli@latest install-plugin "C:/Games/MyGame"
 npx -y godot-cli@latest login                                  # interactive: URL + code
@@ -141,7 +150,8 @@ npx -y godot-cli@latest close          "C:/Games/MyGame"
 npx -y godot-cli@latest open           "C:/Games/MyGame" --mode Cloud
 npx -y godot-cli@latest wait-for-ready "C:/Games/MyGame"
 npx -y godot-cli@latest status         "C:/Games/MyGame"
-npx -y godot-cli@latest setup-mcp <your-agent> "C:/Games/MyGame"   # claude-code OR codex
+npx -y godot-cli@latest setup-mcp <agent-id> "C:/Games/MyGame"   # claude-code | codex | cursor | gemini
+npx -y godot-cli@latest setup-skills <agent-id> "C:/Games/MyGame"
 ```
 
 ## Troubleshooting

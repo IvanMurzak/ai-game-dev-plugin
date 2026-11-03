@@ -11,28 +11,46 @@
   },
   "plugins": [
     {
-      "name": "unreal",
-      "source": "./plugins/unreal",
+      "name": "unreal-mcp",
+      "source": "./plugins/unreal-mcp",
       "description": "Drive Unreal Engine with Claude via unreal-mcp-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "game-development",
-      "keywords": ["unreal-engine", "unreal", "gamedev", "mcp", "ai"]
+      "keywords": [
+        "unreal-engine",
+        "unreal",
+        "gamedev",
+        "mcp",
+        "ai"
+      ]
     },
     {
-      "name": "unity",
-      "source": "./plugins/unity",
+      "name": "unity-mcp",
+      "source": "./plugins/unity-mcp",
       "description": "Drive Unity with Claude via unity-mcp-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "game-development",
-      "keywords": ["unity", "unity3d", "gamedev", "mcp", "ai"]
+      "keywords": [
+        "unity",
+        "unity3d",
+        "gamedev",
+        "mcp",
+        "ai"
+      ]
     },
     {
-      "name": "godot",
-      "source": "./plugins/godot",
+      "name": "godot-mcp",
+      "source": "./plugins/godot-mcp",
       "description": "Drive Godot with Claude via godot-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "game-development",
-      "keywords": ["godot", "godot-engine", "gamedev", "mcp", "ai"]
+      "keywords": [
+        "godot",
+        "godot-engine",
+        "gamedev",
+        "mcp",
+        "ai"
+      ]
     }
   ]
 }

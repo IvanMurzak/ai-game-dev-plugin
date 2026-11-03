@@ -1,11 +1,11 @@
 ---
 name: unity-game-dev
-description: Use when the user wants to create, set up, or open a Unity project with AI, install the Unity-MCP plugin or its extensions, sign in to ai-game.dev, connect the editor, or wire Claude Code / Codex to Unity's MCP tools. Drives unity-mcp-cli end to end.
+description: Use when the user wants to create, set up, or open a Unity project with AI, install the Unity-MCP plugin or its extensions, sign in to ai-game.dev, connect the editor, or wire your coding agent (Claude Code, Codex, Cursor, Gemini CLI) to Unity's MCP tools. Drives unity-mcp-cli end to end.
 ---
 
 # Unity — AI Game Dev runbook
 
-This skill teaches your AI coding assistant (Claude Code or Codex CLI) to drive **Unity** fully
+This skill teaches your AI coding assistant (Claude Code, Codex, Cursor or Gemini CLI) to drive **Unity** fully
 automatically through the `unity-mcp-cli` npm package. The goal: take the user from nothing to a
 running Unity Editor that is **connected to [ai-game.dev](https://ai-game.dev)** so the AI can
 build the game for them.
@@ -109,16 +109,26 @@ engine's tools directly (create GameObjects, edit scenes, attach components, etc
 the line that matches you:
 
 ```bash
-# If you are Claude Code (writes <project>/.mcp.json):
-npx -y unity-mcp-cli@latest setup-mcp claude-code "C:/Games/MyGame"
-# If you are Codex CLI (writes <project>/.codex/config.toml):
-npx -y unity-mcp-cli@latest setup-mcp codex       "C:/Games/MyGame"
+# Pick the id of the agent you are running as (writes the file shown):
+#   claude-code -> .mcp.json        codex  -> .codex/config.toml
+#   cursor      -> .cursor/mcp.json gemini -> .gemini/settings.json
+npx -y unity-mcp-cli@latest setup-mcp <agent-id> "C:/Games/MyGame"
 ```
 
 The config is pinned to this project and, in Cloud mode, carries a project key (`--oauth` writes a
 URL-only config instead; `--list` shows every agent id). The assistant loads it on its next session
-start in the project folder. Optional: `setup-skills <claude-code|codex> "<path>"` writes the
-plugin's tool skills into `.claude/skills` or `.agents/skills` (needs the running editor).
+start in the project folder.
+
+### 7. Generate the project's skills (recommended)
+
+```bash
+npx -y unity-mcp-cli@latest setup-skills <agent-id> "C:/Games/MyGame"
+```
+
+The Unity plugin generates skills for the tools this project actually has (engine version,
+installed extensions) and writes them where your agent reads skills: `.claude/skills`,
+`.agents/skills`, `.cursor/skills` or `.gemini/skills` (needs the running editor). This runbook only gets the
+project connected; those generated skills teach you the engine's tools in depth.
 
 ## Optional: extensions and `exec`
 
@@ -137,7 +147,7 @@ npx -y unity-mcp-cli@latest exec --path "C:/Games/MyGame" "UnityEngine.Applicati
 ## One-shot summary
 
 ```bash
-# 1. create (fresh only)  2. install  3. login  4. (re)start  5. verify  6. wire MCP
+# 1. create (fresh only)  2. install  3. login  4. (re)start  5. verify  6. wire MCP  7. skills
 npx -y unity-mcp-cli@latest create-project "C:/Games/MyGame"
 npx -y unity-mcp-cli@latest install-plugin "C:/Games/MyGame"
 npx -y unity-mcp-cli@latest login                                  # interactive: URL + code
@@ -145,7 +155,8 @@ npx -y unity-mcp-cli@latest close          "C:/Games/MyGame"
 npx -y unity-mcp-cli@latest open           "C:/Games/MyGame"
 npx -y unity-mcp-cli@latest wait-for-ready "C:/Games/MyGame"
 npx -y unity-mcp-cli@latest status         "C:/Games/MyGame"
-npx -y unity-mcp-cli@latest setup-mcp <your-agent> "C:/Games/MyGame"   # claude-code OR codex
+npx -y unity-mcp-cli@latest setup-mcp <agent-id> "C:/Games/MyGame"   # claude-code | codex | cursor | gemini
+npx -y unity-mcp-cli@latest setup-skills <agent-id> "C:/Games/MyGame"
 ```
 
 ## Troubleshooting

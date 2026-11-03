@@ -10,12 +10,12 @@ door to [ai-game.dev](https://ai-game.dev).
 
 Ships a single **skill** that fires whenever you ask the agent to create, set up, or open a Unity
 project with AI. The agent then runs the full automated flow: scaffold the project via Unity Hub,
-install the Unity-MCP package, log you in to ai-game.dev, open the editor (which auto-connects in
-Cloud mode), and confirm the connection — no manual CLI juggling.
+install the Unity-MCP package, sign this machine in to ai-game.dev once, open the editor (which
+auto-connects in Cloud mode), and confirm the connection — no manual CLI juggling.
 
 ## Prerequisites
 
-- **Node.js 18+**
+- **Node.js 20.19+ or 22.12+**
 - **Unity Hub + a Unity Editor** installed (e.g. Unity 6)
 - A **free [ai-game.dev](https://ai-game.dev) account**
 
@@ -41,9 +41,9 @@ codex plugin marketplace add IvanMurzak/ai-game-dev-plugin
 ## What the AI will do automatically
 
 Ask something like *"Set up a new Unity game with AI."* The agent will **create** the project,
-**install** the Unity-MCP plugin, **close** the editor, walk you through **login** (it prints a
-verification URL + code for you to open in a browser), **open** the editor (it auto-connects in
-Cloud mode), and **wait for the connection** to ai-game.dev before it reports success — then wire
+**install** the Unity-MCP plugin, walk you through a one-time **login** for this machine (it prints
+a verification URL + code for you to open in a browser), (re)**open** the editor (it auto-connects
+in Cloud mode), and **wait for the connection** to ai-game.dev before it reports success — then wire
 the agent to the project's MCP tools so it can build the game for you.
 
 Learn more at **[ai-game.dev](https://ai-game.dev)**. Licensed Apache-2.0.

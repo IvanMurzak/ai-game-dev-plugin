@@ -1,6 +1,6 @@
 {
   "name": "unity",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Drive Unity with your AI coding agent via unity-mcp-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
   "author": {
     "name": "Ivan Murzak",

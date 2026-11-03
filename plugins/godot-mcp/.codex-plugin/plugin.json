@@ -1,6 +1,6 @@
 {
   "name": "godot-mcp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Drive Godot with your AI coding agent via godot-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
   "author": {
     "name": "Ivan Murzak",

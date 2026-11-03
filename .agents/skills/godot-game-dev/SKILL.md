@@ -159,7 +159,6 @@ npx -y godot-cli@latest setup-mcp <your-agent> "C:/Games/MyGame"   # claude-code
   `close`, then `open --mode Cloud`.
 - **`wait-for-ready` times out** — Godot may still be restoring NuGet packages / building C# on
   first launch. Re-run with a longer `--timeout`, and check `status`.
-- **Editor won't close** — add `--force` to `close`.
 
 ## Golden rules
 

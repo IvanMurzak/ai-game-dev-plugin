@@ -159,7 +159,6 @@ npx -y unity-mcp-cli@latest setup-mcp <your-agent> "C:/Games/MyGame"   # claude-
 - **Editor runs but doesn't connect** — it started before `login`. `close`, then `open` again.
 - **`wait-for-ready` times out** — Unity may still be importing or compiling on first launch.
   Re-run with a longer `--timeout`, and check `status`.
-- **Editor won't close** — add `--force` to `close`.
 
 ## Golden rules
 

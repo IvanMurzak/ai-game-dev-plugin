@@ -121,15 +121,9 @@ The exact commands, checks and fixes for each engine are in its runbook:
 
 ## 🛠️ Contributing
 
-Issues and pull requests are welcome. The repo serves both agents from one source tree:
-
-- `plugins/<engine>/skills/<engine>-game-dev/SKILL.md` is the **canonical** runbook, shared by the
-  Claude Code (`.claude-plugin/plugin.json`) and Codex (`.codex-plugin/plugin.json`) manifests.
-- `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` are the two catalogs.
-- `.agents/skills/` is **generated**: after editing a runbook run `node scripts/sync-skills.mjs`, and
-  `node scripts/sync-skills.mjs --check` before you commit.
-
-More in [`AGENTS.md`](./AGENTS.md) and [`scripts/README.md`](./scripts/README.md).
+Issues and pull requests are welcome. Edit the canonical runbook in
+`plugins/<engine>/skills/<engine>-game-dev/SKILL.md`, then run `node scripts/sync-skills.mjs`
+(and `--check` before you commit). The layout and rules are in [`AGENTS.md`](./AGENTS.md).
 
 ## 📄 License
 

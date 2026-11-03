@@ -54,24 +54,13 @@ Where new files go:
 
 ## The one thing that differs per agent
 
-The runbooks are agent-neutral except the **wire-MCP** step, which selects the target by the
-assistant you are running as:
+The runbooks are agent-neutral except the **wire-MCP** step (`setup-mcp claude-code` or
+`setup-mcp codex`); see that step in each runbook for the exact per-engine form.
 
-- **Claude Code** → `setup-mcp claude-code` (writes `.mcp.json`)
-- **Codex CLI** → `setup-mcp codex` (writes `.codex/config.toml`)
+## Flow rules
 
-Unity and Godot take the project path positionally; Unreal takes it as `-p <path>`.
-
-## Golden rules (do not reorder the flow)
-
-1. `login` runs **without a project path**: it signs in once per machine and writes
-   `~/.ai-game-dev/credentials.json` (a path would create a per-project credential instead).
-2. The editor reads that sign-in only at startup, so after `login` always **`close` then `open`**.
-3. Never declare success until **`wait-for-ready`** passes and `status` shows the cloud connection.
-4. `login` is **interactive** (device-code OAuth): relay the verification URL + code to the user
-   and wait.
-5. Keep all JSON valid and keep the create → install → login → close → open → wait-for-ready →
-   wire-MCP ordering intact.
+The order is create → install → login → close → open → wait-for-ready → wire-MCP. Each runbook's
+**Golden rules** section is the one place that explains why; change the flow there, not here.
 
 ## Contributing
 

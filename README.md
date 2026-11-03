@@ -61,6 +61,8 @@ Or open `/plugins` inside Codex and install from the plugin browser.
 Open **Customize**, choose **From GitHub Repository** and enter
 `https://github.com/IvanMurzak/ai-game-dev-plugin`, then install `unity-mcp`.
 
+Swap `unity-mcp` for `unreal-mcp` or `godot-mcp`, or install all three.
+
 ### Gemini CLI
 
 ```bash
@@ -75,7 +77,7 @@ The extension carries all three engine skills.
 npx skills add IvanMurzak/ai-game-dev-plugin
 ```
 
-Swap `unity-mcp` for `unreal-mcp` or `godot-mcp`, or install all three. Then just ask:
+Then just ask:
 
 > _"Make a new Unity game and connect it to ai-game.dev."_
 

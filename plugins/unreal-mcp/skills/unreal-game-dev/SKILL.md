@@ -115,7 +115,7 @@ the user setup succeeded until `wait-for-ready` passes.**
 ### 6. Wire your AI assistant to the project's MCP tools
 
 Register the project's MCP server with the assistant you are running as, so it can call the
-engine's tools directly (spawn actors, edit the level, run Blueprints, etc.). Use the agent id that matches you:
+engine's tools directly (spawn actors, edit the level, run Blueprints, etc.):
 
 ```bash
 # Pick the id of the agent you are running as (writes the file shown):

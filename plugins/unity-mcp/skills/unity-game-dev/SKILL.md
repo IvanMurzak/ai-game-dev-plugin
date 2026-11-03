@@ -105,8 +105,7 @@ running.**
 ### 6. Wire your AI assistant to the project's MCP tools
 
 Register the project's MCP server with the assistant you are running as, so it can call the
-engine's tools directly (create GameObjects, edit scenes, attach components, etc.). Run **only**
-the line that matches you:
+engine's tools directly (create GameObjects, edit scenes, attach components, etc.):
 
 ```bash
 # Pick the id of the agent you are running as (writes the file shown):

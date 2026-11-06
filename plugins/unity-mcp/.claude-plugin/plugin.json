@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "unity-mcp",
   "displayName": "Unity — AI Game Dev",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Drive Unity with Claude via unity-mcp-cli: create a project, install the plugin, log in, and open the editor automatically.",
   "author": {
     "name": "Ivan Murzak",

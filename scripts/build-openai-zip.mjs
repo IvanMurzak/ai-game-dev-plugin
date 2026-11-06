@@ -1,0 +1,326 @@
+#!/usr/bin/env node
+// build-openai-zip.mjs: validates plugins/ai-game-dev/ against the OpenAI plugin-directory rules
+// and packs it into dist/ai-game-dev-openai-<version>.zip (plugin.json at the ZIP root), ready to
+// upload in the OpenAI Plugins dashboard.
+//
+//   node scripts/build-openai-zip.mjs --check                   # validate only, write nothing
+//   node scripts/build-openai-zip.mjs --demo-url <https URL>    # validate and build the ZIP
+//
+// The build refuses to run until review.demo_recording_url is an HTTPS URL; --demo-url sets it in
+// the packaged plugin.json only. Details: scripts/README.md.
+//
+// Packs the plugin's git-tracked and untracked-but-not-ignored files. Limits follow https://developers.openai.com/apps-sdk/deploy/submission. Dependency-free (Node 18+, ESM).
+
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { dirname, join, relative, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
+import { deflateRawSync } from 'node:zlib';
+
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const pluginRoot = join(repoRoot, 'plugins', 'ai-game-dev');
+const PLUGIN_SCHEMA = 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json';
+const MCP_SCHEMA = 'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json';
+const FORBIDDEN_KEYS = new Set(['test_credentials', 'reviewer_instructions', 'clientSecret', 'apps', 'hooks']);
+const SECRET_PATTERNS = [
+  /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
+  /\bsk-[A-Za-z0-9_-]{20,}/,
+  /\bgh[pousr]_[A-Za-z0-9]{20,}/,
+  /\bBearer\s+[A-Za-z0-9._~+/-]{20,}/,
+  /\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\./, // JWT
+];
+
+// ---------- arguments ----------
+
+let options;
+try {
+  ({ values: options } = parseArgs({ options: { check: { type: 'boolean' }, 'demo-url': { type: 'string' } } }));
+} catch (e) {
+  fail(e.message);
+}
+const checkOnly = Boolean(options.check);
+const demoUrlArg = options['demo-url'];
+
+function fail(message) {
+  console.error(`[openai-zip] ${message}`);
+  process.exit(1);
+}
+
+// ---------- validation helpers ----------
+
+const errors = [];
+const error = (m) => errors.push(m);
+
+function text(value, field, max) {
+  if (value === undefined || value === null) return error(`${field} is required`);
+  if (typeof value !== 'string' || value.trim() === '') return error(`${field} must be a non-empty string`);
+  if (value.length > max) error(`${field} is ${value.length} characters (max ${max})`);
+}
+
+function parseHttpsUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' ? url : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function httpsUrl(value, field, max = 1024) {
+  text(value, field, max);
+  if (typeof value !== 'string') return;
+  const url = parseHttpsUrl(value);
+  if (!url) error(`${field} must be an https URL: ${value}`);
+  else if (url.username || url.password) error(`${field} must not embed credentials`);
+}
+
+// Relative "./" path to a file that is packed (exact case); returns the absolute path or undefined.
+function pluginPath(value, field) {
+  if (typeof value !== 'string' || !value.startsWith('./')) return error(`${field} must start with "./"`);
+  const abs = resolve(pluginRoot, value);
+  if (!abs.startsWith(pluginRoot + sep)) return error(`${field} points outside the plugin: ${value}`);
+  if (!packed.has(rel(abs))) return error(`${field} is not a packed file (missing, ignored or wrong case): ${value}`);
+  return abs;
+}
+
+function pngIcon(value, field) {
+  const abs = pluginPath(value, field);
+  if (!abs) return;
+  const png = readFileSync(abs);
+  if (png.length > 5 * 1024 * 1024) error(`${field} is larger than 5 MiB`);
+  if (png.length < 24 || png.toString('latin1', 1, 4) !== 'PNG') {
+    return error(`${field} must be a PNG (this script only checks PNG icons): ${value}`);
+  }
+  const width = png.readUInt32BE(16);
+  const height = png.readUInt32BE(20);
+  if (width !== height) error(`${field} must be square, got ${width}x${height}`);
+  if (width < 48 || width > 4096) error(`${field} must be 48..4096 px, got ${width}`);
+}
+
+// WCAG contrast ratio of a #RRGGBB color against white.
+function contrastWithWhite(hex) {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 1.05 / (0.2126 * r + 0.7152 * g + 0.0722 * b + 0.05);
+}
+
+function forbidKeys(value, path) {
+  if (Array.isArray(value)) value.forEach((v, i) => forbidKeys(v, `${path}[${i}]`));
+  else if (value && typeof value === 'object') {
+    for (const [k, v] of Object.entries(value)) {
+      if (FORBIDDEN_KEYS.has(k)) error(`${path}.${k} is not allowed in a directory submission`);
+      forbidKeys(v, `${path}.${k}`);
+    }
+  }
+}
+
+const readJson = (rel) => {
+  try {
+    return JSON.parse(readFileSync(join(pluginRoot, rel), 'utf8'));
+  } catch (e) {
+    fail(`cannot read plugins/ai-game-dev/${rel}: ${e.message}`);
+  }
+};
+
+// ---------- files that will be packed ----------
+
+// Tracked plus untracked-but-not-ignored files, so ignored local files (.env, OS junk) never ship.
+const lsFiles = spawnSync('git', ['ls-files', '-z', '-co', '--exclude-standard', '--', '.'], { cwd: pluginRoot, encoding: 'utf8' });
+if (lsFiles.status !== 0) fail(`git ls-files failed: ${lsFiles.stderr || lsFiles.error?.message}`);
+const files = [...new Set(lsFiles.stdout.split('\0').filter(Boolean))]
+  .map((name) => join(pluginRoot, name))
+  .filter((abs) => existsSync(abs)); // drop tracked files deleted in the working tree
+if (!files.length) fail('git ls-files found no files in plugins/ai-game-dev (is it ignored or outside the repo?)');
+const rel = (abs) => relative(pluginRoot, abs).split(sep).join('/');
+const packed = new Set(files.map(rel));
+
+// ---------- plugin.json ----------
+
+const manifest = readJson('plugin.json');
+if (demoUrlArg) (((manifest.extensions ??= {})['com.openai'] ??= {}).review ??= {}).demo_recording_url = demoUrlArg;
+
+if (manifest.$schema !== PLUGIN_SCHEMA) error(`plugin.json $schema must be ${PLUGIN_SCHEMA}`);
+text(manifest.name, 'name', 64);
+if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(manifest.name ?? '')) error('name must be lowercase letters, numbers and single hyphens');
+if (!/^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/.test(manifest.version ?? '')) error('version must be a semantic version');
+text(manifest.description, 'description', 4000);
+text(manifest.author?.name, 'author.name', 120);
+if (manifest.author?.url) httpsUrl(manifest.author.url, 'author.url', 2048);
+if (manifest.homepage) httpsUrl(manifest.homepage, 'homepage', 2048);
+forbidKeys(manifest, 'plugin.json');
+
+const openai = manifest.extensions?.['com.openai'] ?? {};
+const ui = openai.interface ?? {};
+text(ui.displayName, 'interface.displayName', 30);
+text(ui.shortDescription, 'interface.shortDescription', 30);
+text(ui.longDescription, 'interface.longDescription', 4000);
+text(ui.developerName, 'interface.developerName', 80);
+text(ui.category, 'interface.category', 200);
+if (!Array.isArray(ui.capabilities) || ui.capabilities.length > 20) error('interface.capabilities must be an array of at most 20');
+else ui.capabilities.forEach((c, i) => text(c, `interface.capabilities[${i}]`, 120));
+for (const field of ['websiteURL', 'supportURL', 'privacyPolicyURL', 'termsOfServiceURL']) {
+  httpsUrl(ui[field], `interface.${field}`);
+}
+const prompts = ui.defaultPrompt === undefined ? [] : [ui.defaultPrompt].flat();
+if (prompts.length > 3) error('interface.defaultPrompt has more than 3 prompts');
+if (new Set(prompts).size !== prompts.length) error('interface.defaultPrompt prompts must be unique');
+prompts.forEach((p, i) => {
+  text(p, `interface.defaultPrompt[${i}]`, 128);
+  if (/@\w/.test(p)) error(`interface.defaultPrompt[${i}] must not @mention an app`);
+});
+if (ui.brandColor !== undefined) {
+  if (!/^#[0-9A-Fa-f]{6}$/.test(ui.brandColor)) error('interface.brandColor must be #RRGGBB');
+  else if (contrastWithWhite(ui.brandColor) < 2) error('interface.brandColor needs at least 2:1 contrast against white');
+}
+for (const field of ['logo', 'composerIcon', 'logoDark', 'composerIconDark']) {
+  if (ui[field] !== undefined || !field.endsWith('Dark')) pngIcon(ui[field], `interface.${field}`);
+}
+if (openai.onboardingSkill !== undefined) pluginPath(openai.onboardingSkill, 'onboardingSkill');
+
+const review = openai.review ?? {};
+const positive = review.test_cases?.positive ?? [];
+const negative = review.test_cases?.negative ?? [];
+if (positive.length !== 5) error(`review.test_cases.positive needs exactly 5 cases, has ${positive.length}`);
+if (negative.length !== 3) error(`review.test_cases.negative needs exactly 3 cases, has ${negative.length}`);
+positive.forEach((c, i) => {
+  for (const f of ['description', 'prompt', 'tools_triggered', 'expected_behavior']) {
+    text(c[f], `review.test_cases.positive[${i}].${f}`, 4000);
+  }
+});
+negative.forEach((c, i) => {
+  for (const f of ['description', 'prompt']) text(c[f], `review.test_cases.negative[${i}].${f}`, 4000);
+});
+const demoUrl = review.demo_recording_url;
+if (parseHttpsUrl(demoUrl)) httpsUrl(demoUrl, 'review.demo_recording_url');
+else if (checkOnly && !demoUrlArg) console.warn('[openai-zip] warning: review.demo_recording_url is still a placeholder; a build needs --demo-url <https URL>');
+else error('review.demo_recording_url is not an HTTPS URL yet; pass --demo-url <https URL> (the recorded demo)');
+text(openai.publication?.release_notes, 'publication.release_notes', 4000);
+
+// ---------- mcp.json ----------
+
+const mcp = readJson('mcp.json');
+if (mcp.$schema !== MCP_SCHEMA) error(`mcp.json $schema must be ${MCP_SCHEMA}`);
+const servers = Object.entries(mcp.mcpServers ?? {});
+if (servers.length !== 1) error(`mcp.json must declare exactly one MCP server, has ${servers.length}`);
+for (const [name, server] of servers) {
+  if (!server || typeof server !== 'object') {
+    error(`mcp.json ${name} must be an object`);
+    continue;
+  }
+  if (server.type !== 'streamable-http') error(`mcp.json ${name}: type must be "streamable-http"`);
+  httpsUrl(server.url, `mcp.json ${name}.url`);
+  if (server.headers && Object.keys(server.headers).length) error(`mcp.json ${name}: headers must be empty`);
+  const auth = server.extensions?.['com.openai']?.auth;
+  if (auth?.type !== 'oauth') error(`mcp.json ${name}: extensions.com.openai.auth.type must be "oauth"`);
+  if (auth?.client?.mode === 'dcr' && auth.client.clientId) error(`mcp.json ${name}: a dcr client must not set clientId`);
+}
+forbidKeys(mcp, 'mcp.json');
+
+// ---------- package contents ----------
+
+for (const abs of files) {
+  const name = rel(abs);
+  if (/^(hooks\/|\.app\.json$|\.codex-plugin\/|\.mcp\.json$)/.test(name)) error(`${name} must not be in the package`);
+  if (/\.(md|json|txt|ya?ml|svg)$/i.test(name)) {
+    const body = readFileSync(abs, 'utf8');
+    if (SECRET_PATTERNS.some((re) => re.test(body))) error(`${name} looks like it contains a secret`);
+  }
+}
+const skills = new Set(files.map(rel).flatMap((name) => /^skills\/([^/]+)\//.exec(name)?.[1] ?? []));
+if (!skills.size) error('skills/ has no skill folders');
+for (const skill of skills) {
+  const skillFile = join(pluginRoot, 'skills', skill, 'SKILL.md');
+  if (!existsSync(skillFile)) {
+    error(`skills/${skill}/SKILL.md is missing`);
+    continue;
+  }
+  const front = /^\uFEFF?---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(skillFile, 'utf8'))?.[1] ?? '';
+  const name = /^name:\s*(.+)$/m.exec(front)?.[1]?.trim();
+  if (name !== skill) error(`skills/${skill}/SKILL.md: frontmatter name must be "${skill}"`);
+  if (!/^description:\s*\S/m.test(front)) error(`skills/${skill}/SKILL.md: frontmatter description is missing`);
+}
+
+// The packaged skills and logo are generated copies; they must match their sources.
+const sync = spawnSync(process.execPath, [join(repoRoot, 'scripts', 'sync-skills.mjs'), '--check'], { encoding: 'utf8' });
+if (sync.status !== 0) error(`sync-skills --check failed; run node scripts/sync-skills.mjs\n${sync.stderr.trim()}`);
+
+// ---------- report ----------
+
+if (errors.length) {
+  for (const e of errors) console.error(`[openai-zip] ERROR ${e}`);
+  fail(`${errors.length} problem(s); no ZIP written.`);
+}
+if (checkOnly) {
+  console.log(`[openai-zip] plugins/ai-game-dev ${manifest.version} is valid (${files.length} files).`);
+  process.exit(0);
+}
+
+// ---------- ZIP (deflate, deterministic timestamps) ----------
+
+const CRC_TABLE = Array.from({ length: 256 }, (_, n) => {
+  let c = n;
+  for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+  return c >>> 0;
+});
+function crc32(buf) {
+  let c = 0xffffffff;
+  for (const byte of buf) c = CRC_TABLE[(c ^ byte) & 0xff] ^ (c >>> 8);
+  return (c ^ 0xffffffff) >>> 0;
+}
+
+const DOS_TIME = 0; // 00:00:00
+const DOS_DATE = ((2026 - 1980) << 9) | (1 << 5) | 1; // 2026-01-01, so the same input gives the same ZIP
+
+const entries = files
+  .map((abs) => {
+    const name = rel(abs);
+    const data = name === 'plugin.json' ? Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`) : readFileSync(abs);
+    return { name, data };
+  })
+  .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+
+const chunks = [];
+const central = [];
+let offset = 0;
+for (const { name, data } of entries) {
+  const nameBuf = Buffer.from(name, 'utf8');
+  const compressed = deflateRawSync(data, { level: 9 });
+  const header = Buffer.alloc(30);
+  header.writeUInt32LE(0x04034b50, 0);
+  header.writeUInt16LE(20, 4); // version needed
+  header.writeUInt16LE(0x0800, 6); // UTF-8 names
+  header.writeUInt16LE(8, 8); // deflate
+  header.writeUInt16LE(DOS_TIME, 10);
+  header.writeUInt16LE(DOS_DATE, 12);
+  header.writeUInt32LE(crc32(data), 14);
+  header.writeUInt32LE(compressed.length, 18);
+  header.writeUInt32LE(data.length, 22);
+  header.writeUInt16LE(nameBuf.length, 26);
+  header.writeUInt16LE(0, 28);
+
+  const entry = Buffer.alloc(46);
+  entry.writeUInt32LE(0x02014b50, 0);
+  entry.writeUInt16LE(20, 4); // version made by
+  header.copy(entry, 6, 4, 30); // version needed .. name length
+  entry.writeUInt32LE(offset, 42);
+  central.push(entry, nameBuf);
+
+  chunks.push(header, nameBuf, compressed);
+  offset += header.length + nameBuf.length + compressed.length;
+}
+const centralBuf = Buffer.concat(central);
+const end = Buffer.alloc(22);
+end.writeUInt32LE(0x06054b50, 0);
+end.writeUInt16LE(entries.length, 8);
+end.writeUInt16LE(entries.length, 10);
+end.writeUInt32LE(centralBuf.length, 12);
+end.writeUInt32LE(offset, 16);
+
+const outFile = join(repoRoot, 'dist', `ai-game-dev-openai-${manifest.version}.zip`);
+mkdirSync(dirname(outFile), { recursive: true });
+writeFileSync(outFile, Buffer.concat([...chunks, centralBuf, end]));
+console.log(`[openai-zip] wrote ${relative(repoRoot, outFile)} (${entries.length} files):`);
+for (const { name } of entries) console.log(`  ${name}`);

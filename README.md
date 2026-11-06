@@ -71,6 +71,14 @@ gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin
 
 The extension carries all three engine skills.
 
+### ChatGPT / OpenAI plugin directory
+
+[`plugins/ai-game-dev`](./plugins/ai-game-dev) is the **AI Game Developer** package for the OpenAI
+plugin directory (ChatGPT and Codex): one connection to `https://ai-game.dev/mcp`, signed in with
+your ai-game.dev account, plus the three engine runbooks. It reaches the editors you have open and
+signed in to the same account. It is not listed in the directory yet; once it is, install it from
+there. Building the upload ZIP: [`scripts/README.md`](./scripts/README.md).
+
 ### Any agent with skills (`npx skills`)
 
 ```bash

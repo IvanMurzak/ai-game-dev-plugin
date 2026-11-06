@@ -23,3 +23,6 @@ desktop.ini
 .env
 .env.*
 *.local
+
+# Build output (scripts/build-openai-zip.mjs)
+dist/

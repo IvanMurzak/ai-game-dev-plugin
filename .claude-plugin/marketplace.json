@@ -14,7 +14,7 @@
       "name": "unreal-mcp",
       "source": "./plugins/unreal-mcp",
       "description": "Drive Unreal Engine with Claude via unreal-mcp-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "category": "game-development",
       "keywords": [
         "unreal-engine",
@@ -28,7 +28,7 @@
       "name": "unity-mcp",
       "source": "./plugins/unity-mcp",
       "description": "Drive Unity with Claude via unity-mcp-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "category": "game-development",
       "keywords": [
         "unity",
@@ -42,7 +42,7 @@
       "name": "godot-mcp",
       "source": "./plugins/godot-mcp",
       "description": "Drive Godot with Claude via godot-cli: create a project, install the plugin, log in, and open the editor connected to ai-game.dev — automatically.",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "category": "game-development",
       "keywords": [
         "godot",

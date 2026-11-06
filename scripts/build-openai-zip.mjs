@@ -216,6 +216,9 @@ for (const [name, server] of servers) {
   const auth = server.extensions?.['com.openai']?.auth;
   if (auth?.type !== 'oauth') error(`mcp.json ${name}: extensions.com.openai.auth.type must be "oauth"`);
   if (auth?.client?.mode === 'dcr' && auth.client.clientId) error(`mcp.json ${name}: a dcr client must not set clientId`);
+  // The OpenAI upload form rejects OAuth without both endpoints, even when discovery would supply them.
+  for (const key of ['authorizationUrl', 'tokenUrl']) httpsUrl(auth?.[key], `mcp.json ${name} auth.${key}`);
+  if (auth?.registrationUrl !== undefined) httpsUrl(auth.registrationUrl, `mcp.json ${name} auth.registrationUrl`);
 }
 forbidKeys(mcp, 'mcp.json');
 

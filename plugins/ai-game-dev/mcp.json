@@ -11,6 +11,9 @@
             "client": {
               "mode": "dcr"
             },
+            "authorizationUrl": "https://ai-game.dev/oauth/authorize",
+            "tokenUrl": "https://ai-game.dev/oauth/token",
+            "registrationUrl": "https://ai-game.dev/oauth/register",
             "baseScopes": ["mcp:agent"]
           }
         }

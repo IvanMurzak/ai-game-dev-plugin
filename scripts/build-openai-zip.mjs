@@ -75,12 +75,12 @@ function httpsUrl(value, field, max = 1024) {
   else if (url.username || url.password) error(`${field} must not embed credentials`);
 }
 
-// Relative "./" path inside the plugin root that exists; returns the absolute path or undefined.
+// Relative "./" path to a file that is packed (exact case); returns the absolute path or undefined.
 function pluginPath(value, field) {
   if (typeof value !== 'string' || !value.startsWith('./')) return error(`${field} must start with "./"`);
   const abs = resolve(pluginRoot, value);
   if (!abs.startsWith(pluginRoot + sep)) return error(`${field} points outside the plugin: ${value}`);
-  if (!existsSync(abs)) return error(`${field} does not exist: ${value}`);
+  if (!packed.has(rel(abs))) return error(`${field} is not a packed file (missing, ignored or wrong case): ${value}`);
   return abs;
 }
 
@@ -125,10 +125,22 @@ const readJson = (rel) => {
   }
 };
 
+// ---------- files that will be packed ----------
+
+// Tracked plus untracked-but-not-ignored files, so ignored local files (.env, OS junk) never ship.
+const lsFiles = spawnSync('git', ['ls-files', '-z', '-co', '--exclude-standard', '--', '.'], { cwd: pluginRoot, encoding: 'utf8' });
+if (lsFiles.status !== 0) fail(`git ls-files failed: ${lsFiles.stderr || lsFiles.error?.message}`);
+const files = [...new Set(lsFiles.stdout.split('\0').filter(Boolean))]
+  .map((name) => join(pluginRoot, name))
+  .filter((abs) => existsSync(abs)); // drop tracked files deleted in the working tree
+if (!files.length) fail('git ls-files found no files in plugins/ai-game-dev (is it ignored or outside the repo?)');
+const rel = (abs) => relative(pluginRoot, abs).split(sep).join('/');
+const packed = new Set(files.map(rel));
+
 // ---------- plugin.json ----------
 
 const manifest = readJson('plugin.json');
-if (demoUrlArg) manifest.extensions['com.openai'].review.demo_recording_url = demoUrlArg;
+if (demoUrlArg) (((manifest.extensions ??= {})['com.openai'] ??= {}).review ??= {}).demo_recording_url = demoUrlArg;
 
 if (manifest.$schema !== PLUGIN_SCHEMA) error(`plugin.json $schema must be ${PLUGIN_SCHEMA}`);
 text(manifest.name, 'name', 64);
@@ -194,6 +206,10 @@ if (mcp.$schema !== MCP_SCHEMA) error(`mcp.json $schema must be ${MCP_SCHEMA}`);
 const servers = Object.entries(mcp.mcpServers ?? {});
 if (servers.length !== 1) error(`mcp.json must declare exactly one MCP server, has ${servers.length}`);
 for (const [name, server] of servers) {
+  if (!server || typeof server !== 'object') {
+    error(`mcp.json ${name} must be an object`);
+    continue;
+  }
   if (server.type !== 'streamable-http') error(`mcp.json ${name}: type must be "streamable-http"`);
   httpsUrl(server.url, `mcp.json ${name}.url`);
   if (server.headers && Object.keys(server.headers).length) error(`mcp.json ${name}: headers must be empty`);
@@ -205,13 +221,6 @@ forbidKeys(mcp, 'mcp.json');
 
 // ---------- package contents ----------
 
-// Tracked plus untracked-but-not-ignored files, so ignored local files (.env, OS junk) never ship.
-const lsFiles = spawnSync('git', ['ls-files', '-z', '-co', '--exclude-standard', '--', '.'], { cwd: pluginRoot, encoding: 'utf8' });
-if (lsFiles.status !== 0) fail(`git ls-files failed: ${lsFiles.stderr || lsFiles.error?.message}`);
-const files = [...new Set(lsFiles.stdout.split('\0').filter(Boolean))]
-  .map((name) => join(pluginRoot, name))
-  .filter((abs) => existsSync(abs)); // drop tracked files deleted in the working tree
-const rel = (abs) => relative(pluginRoot, abs).split(sep).join('/');
 for (const abs of files) {
   const name = rel(abs);
   if (/^(hooks\/|\.app\.json$|\.codex-plugin\/|\.mcp\.json$)/.test(name)) error(`${name} must not be in the package`);
@@ -228,7 +237,7 @@ for (const skill of skills) {
     error(`skills/${skill}/SKILL.md is missing`);
     continue;
   }
-  const front = /^---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(skillFile, 'utf8'))?.[1] ?? '';
+  const front = /^\uFEFF?---\r?\n([\s\S]*?)\r?\n---/.exec(readFileSync(skillFile, 'utf8'))?.[1] ?? '';
   const name = /^name:\s*(.+)$/m.exec(front)?.[1]?.trim();
   if (name !== skill) error(`skills/${skill}/SKILL.md: frontmatter name must be "${skill}"`);
   if (!/^description:\s*\S/m.test(front)) error(`skills/${skill}/SKILL.md: frontmatter description is missing`);
@@ -278,7 +287,7 @@ const central = [];
 let offset = 0;
 for (const { name, data } of entries) {
   const nameBuf = Buffer.from(name, 'utf8');
-  const packed = deflateRawSync(data, { level: 9 });
+  const compressed = deflateRawSync(data, { level: 9 });
   const header = Buffer.alloc(30);
   header.writeUInt32LE(0x04034b50, 0);
   header.writeUInt16LE(20, 4); // version needed
@@ -287,7 +296,7 @@ for (const { name, data } of entries) {
   header.writeUInt16LE(DOS_TIME, 10);
   header.writeUInt16LE(DOS_DATE, 12);
   header.writeUInt32LE(crc32(data), 14);
-  header.writeUInt32LE(packed.length, 18);
+  header.writeUInt32LE(compressed.length, 18);
   header.writeUInt32LE(data.length, 22);
   header.writeUInt16LE(nameBuf.length, 26);
   header.writeUInt16LE(0, 28);
@@ -299,8 +308,8 @@ for (const { name, data } of entries) {
   entry.writeUInt32LE(offset, 42);
   central.push(entry, nameBuf);
 
-  chunks.push(header, nameBuf, packed);
-  offset += header.length + nameBuf.length + packed.length;
+  chunks.push(header, nameBuf, compressed);
+  offset += header.length + nameBuf.length + compressed.length;
 }
 const centralBuf = Buffer.concat(central);
 const end = Buffer.alloc(22);

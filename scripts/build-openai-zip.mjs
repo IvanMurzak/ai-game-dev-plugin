@@ -6,23 +6,22 @@
 //   node scripts/build-openai-zip.mjs --check                   # validate only, write nothing
 //   node scripts/build-openai-zip.mjs --demo-url <https URL>    # validate and build the ZIP
 //
-// The repo keeps a placeholder in review.demo_recording_url until the demo is recorded. The build
-// refuses to run while the packaged value is not an HTTPS URL; --demo-url writes the URL into the
-// packaged copy of plugin.json only (the repo file is left as is).
+// The build refuses to run until review.demo_recording_url is an HTTPS URL; --demo-url sets it in
+// the packaged plugin.json only. Details: scripts/README.md.
 //
-// Limits follow https://developers.openai.com/apps-sdk/deploy/submission. Dependency-free (Node 18+, ESM).
+// Packs the plugin's git-tracked and untracked-but-not-ignored files. Limits follow https://developers.openai.com/apps-sdk/deploy/submission. Dependency-free (Node 18+, ESM).
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
 import { deflateRawSync } from 'node:zlib';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pluginRoot = join(repoRoot, 'plugins', 'ai-game-dev');
 const PLUGIN_SCHEMA = 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json';
 const MCP_SCHEMA = 'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json';
-const JUNK_FILES = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const FORBIDDEN_KEYS = new Set(['test_credentials', 'reviewer_instructions', 'clientSecret', 'apps', 'hooks']);
 const SECRET_PATTERNS = [
   /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
@@ -34,14 +33,14 @@ const SECRET_PATTERNS = [
 
 // ---------- arguments ----------
 
-const args = process.argv.slice(2);
-const checkOnly = args.includes('--check');
-const demoUrlIndex = args.indexOf('--demo-url');
-const demoUrlArg = demoUrlIndex >= 0 ? args[demoUrlIndex + 1] : undefined;
-if (demoUrlIndex >= 0 && (!demoUrlArg || demoUrlArg.startsWith('--'))) fail('--demo-url needs a value');
-const known = new Set(['--check', '--demo-url', demoUrlArg]);
-const unknown = args.filter((a) => !known.has(a));
-if (unknown.length) fail(`unknown argument(s): ${unknown.join(' ')}`);
+let options;
+try {
+  ({ values: options } = parseArgs({ options: { check: { type: 'boolean' }, 'demo-url': { type: 'string' } } }));
+} catch (e) {
+  fail(e.message);
+}
+const checkOnly = Boolean(options.check);
+const demoUrlArg = options['demo-url'];
 
 function fail(message) {
   console.error(`[openai-zip] ${message}`);
@@ -51,29 +50,29 @@ function fail(message) {
 // ---------- validation helpers ----------
 
 const errors = [];
-const warnings = [];
 const error = (m) => errors.push(m);
 
-function text(value, field, max, { required = true } = {}) {
-  if (value === undefined || value === null) {
-    if (required) error(`${field} is required`);
-    return;
-  }
+function text(value, field, max) {
+  if (value === undefined || value === null) return error(`${field} is required`);
   if (typeof value !== 'string' || value.trim() === '') return error(`${field} must be a non-empty string`);
   if (value.length > max) error(`${field} is ${value.length} characters (max ${max})`);
+}
+
+function parseHttpsUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' ? url : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 function httpsUrl(value, field, max = 1024) {
   text(value, field, max);
   if (typeof value !== 'string') return;
-  let url;
-  try {
-    url = new URL(value);
-  } catch {
-    return error(`${field} is not a URL: ${value}`);
-  }
-  if (url.protocol !== 'https:') error(`${field} must use https: ${value}`);
-  if (url.username || url.password) error(`${field} must not embed credentials`);
+  const url = parseHttpsUrl(value);
+  if (!url) error(`${field} must be an https URL: ${value}`);
+  else if (url.username || url.password) error(`${field} must not embed credentials`);
 }
 
 // Relative "./" path inside the plugin root that exists; returns the absolute path or undefined.
@@ -108,22 +107,14 @@ function contrastWithWhite(hex) {
   return 1.05 / (0.2126 * r + 0.7152 * g + 0.0722 * b + 0.05);
 }
 
-function walkKeys(value, path, visit) {
-  if (Array.isArray(value)) value.forEach((v, i) => walkKeys(v, `${path}[${i}]`, visit));
+function forbidKeys(value, path) {
+  if (Array.isArray(value)) value.forEach((v, i) => forbidKeys(v, `${path}[${i}]`));
   else if (value && typeof value === 'object') {
     for (const [k, v] of Object.entries(value)) {
-      visit(k, `${path}.${k}`);
-      walkKeys(v, `${path}.${k}`, visit);
+      if (FORBIDDEN_KEYS.has(k)) error(`${path}.${k} is not allowed in a directory submission`);
+      forbidKeys(v, `${path}.${k}`);
     }
   }
-}
-
-function listFiles(dir) {
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    const abs = join(dir, entry.name);
-    if (entry.isDirectory()) return listFiles(abs);
-    return JUNK_FILES.has(entry.name) ? [] : [abs];
-  });
 }
 
 const readJson = (rel) => {
@@ -147,9 +138,7 @@ text(manifest.description, 'description', 4000);
 text(manifest.author?.name, 'author.name', 120);
 if (manifest.author?.url) httpsUrl(manifest.author.url, 'author.url', 2048);
 if (manifest.homepage) httpsUrl(manifest.homepage, 'homepage', 2048);
-walkKeys(manifest, 'plugin.json', (key, path) => {
-  if (FORBIDDEN_KEYS.has(key)) error(`${path} is not allowed in a directory submission`);
-});
+forbidKeys(manifest, 'plugin.json');
 
 const openai = manifest.extensions?.['com.openai'] ?? {};
 const ui = openai.interface ?? {};
@@ -174,8 +163,9 @@ if (ui.brandColor !== undefined) {
   if (!/^#[0-9A-Fa-f]{6}$/.test(ui.brandColor)) error('interface.brandColor must be #RRGGBB');
   else if (contrastWithWhite(ui.brandColor) < 2) error('interface.brandColor needs at least 2:1 contrast against white');
 }
-for (const field of ['logo', 'composerIcon']) pngIcon(ui[field], `interface.${field}`);
-for (const field of ['logoDark', 'composerIconDark']) if (ui[field] !== undefined) pngIcon(ui[field], `interface.${field}`);
+for (const field of ['logo', 'composerIcon', 'logoDark', 'composerIconDark']) {
+  if (ui[field] !== undefined || !field.endsWith('Dark')) pngIcon(ui[field], `interface.${field}`);
+}
 if (openai.onboardingSkill !== undefined) pluginPath(openai.onboardingSkill, 'onboardingSkill');
 
 const review = openai.review ?? {};
@@ -192,9 +182,8 @@ negative.forEach((c, i) => {
   for (const f of ['description', 'prompt']) text(c[f], `review.test_cases.negative[${i}].${f}`, 4000);
 });
 const demoUrl = review.demo_recording_url;
-const demoUrlOk = typeof demoUrl === 'string' && /^https:\/\/[^\s]+$/.test(demoUrl);
-if (demoUrlOk) httpsUrl(demoUrl, 'review.demo_recording_url');
-else if (checkOnly && !demoUrlArg) warnings.push('review.demo_recording_url is still a placeholder; a build needs --demo-url <https URL>');
+if (parseHttpsUrl(demoUrl)) httpsUrl(demoUrl, 'review.demo_recording_url');
+else if (checkOnly && !demoUrlArg) console.warn('[openai-zip] warning: review.demo_recording_url is still a placeholder; a build needs --demo-url <https URL>');
 else error('review.demo_recording_url is not an HTTPS URL yet; pass --demo-url <https URL> (the recorded demo)');
 text(openai.publication?.release_notes, 'publication.release_notes', 4000);
 
@@ -212,13 +201,16 @@ for (const [name, server] of servers) {
   if (auth?.type !== 'oauth') error(`mcp.json ${name}: extensions.com.openai.auth.type must be "oauth"`);
   if (auth?.client?.mode === 'dcr' && auth.client.clientId) error(`mcp.json ${name}: a dcr client must not set clientId`);
 }
-walkKeys(mcp, 'mcp.json', (key, path) => {
-  if (FORBIDDEN_KEYS.has(key)) error(`${path} is not allowed in a directory submission`);
-});
+forbidKeys(mcp, 'mcp.json');
 
 // ---------- package contents ----------
 
-const files = listFiles(pluginRoot);
+// Tracked plus untracked-but-not-ignored files, so ignored local files (.env, OS junk) never ship.
+const lsFiles = spawnSync('git', ['ls-files', '-z', '-co', '--exclude-standard', '--', '.'], { cwd: pluginRoot, encoding: 'utf8' });
+if (lsFiles.status !== 0) fail(`git ls-files failed: ${lsFiles.stderr || lsFiles.error?.message}`);
+const files = [...new Set(lsFiles.stdout.split('\0').filter(Boolean))]
+  .map((name) => join(pluginRoot, name))
+  .filter((abs) => existsSync(abs)); // drop tracked files deleted in the working tree
 const rel = (abs) => relative(pluginRoot, abs).split(sep).join('/');
 for (const abs of files) {
   const name = rel(abs);
@@ -228,11 +220,10 @@ for (const abs of files) {
     if (SECRET_PATTERNS.some((re) => re.test(body))) error(`${name} looks like it contains a secret`);
   }
 }
-const skillsDir = join(pluginRoot, 'skills');
-const skills = existsSync(skillsDir) ? readdirSync(skillsDir).filter((d) => statSync(join(skillsDir, d)).isDirectory()) : [];
-if (!skills.length) error('skills/ has no skill folders');
+const skills = new Set(files.map(rel).flatMap((name) => /^skills\/([^/]+)\//.exec(name)?.[1] ?? []));
+if (!skills.size) error('skills/ has no skill folders');
 for (const skill of skills) {
-  const skillFile = join(skillsDir, skill, 'SKILL.md');
+  const skillFile = join(pluginRoot, 'skills', skill, 'SKILL.md');
   if (!existsSync(skillFile)) {
     error(`skills/${skill}/SKILL.md is missing`);
     continue;
@@ -249,7 +240,6 @@ if (sync.status !== 0) error(`sync-skills --check failed; run node scripts/sync-
 
 // ---------- report ----------
 
-for (const w of warnings) console.warn(`[openai-zip] warning: ${w}`);
 if (errors.length) {
   for (const e of errors) console.error(`[openai-zip] ERROR ${e}`);
   fail(`${errors.length} problem(s); no ZIP written.`);

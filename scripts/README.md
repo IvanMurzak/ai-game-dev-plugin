@@ -27,12 +27,9 @@ Validates `plugins/ai-game-dev/` against the OpenAI submission rules and packs i
 `dist/ai-game-dev-openai-<version>.zip` (`dist/` is gitignored), with `plugin.json` at the ZIP root.
 Upload that file in the OpenAI Plugins dashboard.
 
-Checks: the listing text limits (`displayName`/`shortDescription` ≤ 30, `longDescription` ≤ 4000,
-`developerName` ≤ 80, ≤ 20 capabilities × 120, ≤ 3 unique starter prompts × 128), HTTPS listing
-URLs, `brandColor` contrast, square PNG icons of 48–4096 px, exactly 5 positive and 3 negative
-review cases, exactly one `streamable-http` MCP server with OAuth and no headers, no
-`test_credentials` / `reviewer_instructions` / `clientSecret` / hooks / app references, nothing that
-looks like a secret, valid skill frontmatter, and `sync-skills.mjs --check`.
+It checks the listing limits, review test cases, icons, the single OAuth MCP server, forbidden keys
+(credentials, reviewer instructions, hooks) and secrets, and runs `sync-skills.mjs --check`; each
+problem is reported by field. Only git-tracked and untracked-but-not-ignored files are packed.
 
 ```bash
 node scripts/build-openai-zip.mjs --check                                 # validate only

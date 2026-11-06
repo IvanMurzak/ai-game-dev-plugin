@@ -5,8 +5,9 @@
 //   .agents/skills/ (Codex repo-native skills) and skills/ (the Gemini CLI extension at the root).
 //   It is also copied into plugins/ai-game-dev/skills/ (the OpenAI plugin-directory package).
 // - The root assets/logo.png is copied into each plugin (Cursor and OpenAI need a logo inside it).
-// - Every "version" (catalog entries, plugin manifests, gemini-extension.json) must be the same,
-//   and each plugin's root plugin.json (Agent Plugins standard) mirrors its Cursor manifest.
+// - Every "version" (catalog entries, plugin manifests, gemini-extension.json and
+//   plugins/ai-game-dev/plugin.json) must be the same, and each engine plugin's root plugin.json
+//   (Agent Plugins standard) mirrors its Cursor manifest.
 //
 //   node scripts/sync-skills.mjs            # write the copies
 //   node scripts/sync-skills.mjs --check    # verify only; exit 1 on drift or a version mismatch
@@ -21,6 +22,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ENGINES = ['unreal', 'unity', 'godot'];
 const PLUGIN_MANIFESTS = ['.claude-plugin', '.codex-plugin', '.cursor-plugin', '']; // '' = root plugin.json
 const OPENAI_PLUGIN = join('plugins', 'ai-game-dev'); // one plugin for the OpenAI plugin directory
+const PLUGIN_DIRS = [...ENGINES.map((engine) => join('plugins', `${engine}-mcp`)), OPENAI_PLUGIN];
 
 // source -> generated copies (byte-identical)
 const COPIES = [
@@ -32,9 +34,7 @@ const COPIES = [
   })),
   {
     source: join('assets', 'logo.png'),
-    targets: [...ENGINES.map((engine) => join('plugins', `${engine}-mcp`)), OPENAI_PLUGIN].map((plugin) =>
-      join(plugin, 'assets', 'logo.png')
-    ),
+    targets: PLUGIN_DIRS.map((plugin) => join(plugin, 'assets', 'logo.png')),
   },
 ];
 

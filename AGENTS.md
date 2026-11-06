@@ -53,8 +53,8 @@ Where new files go:
 - A release bumps every `version` (catalog entries, plugin manifests, `gemini-extension.json`,
   `plugins/ai-game-dev/plugin.json`); `sync-skills.mjs --check` fails if one is missed.
 - OpenAI listing text, review test cases and release notes: `plugins/ai-game-dev/plugin.json`, then
-  `node scripts/build-openai-zip.mjs --check`. Never put reviewer credentials or instructions there
-  (they go in the OpenAI dashboard); the ZIP is built only with a real `--demo-url`.
+  `node scripts/build-openai-zip.mjs --check` (build details: `scripts/README.md`). Never put
+  reviewer credentials or instructions there; they go in the OpenAI dashboard.
 - Maintenance scripts: `scripts/` (dependency-free, Node 18+).
 
 ## Single source of truth for the skill bodies

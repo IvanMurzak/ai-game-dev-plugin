@@ -77,8 +77,7 @@ The extension carries all three engine skills.
 plugin directory (ChatGPT and Codex): one connection to `https://ai-game.dev/mcp`, signed in with
 your ai-game.dev account, plus the three engine runbooks. It reaches the editors you have open and
 signed in to the same account. It is not listed in the directory yet; once it is, install it from
-there. Maintainers build the upload ZIP with `node scripts/build-openai-zip.mjs` (see
-[`scripts/README.md`](./scripts/README.md)).
+there. Building the upload ZIP: [`scripts/README.md`](./scripts/README.md).
 
 ### Any agent with skills (`npx skills`)
 

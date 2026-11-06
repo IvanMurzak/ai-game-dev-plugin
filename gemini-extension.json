@@ -1,5 +1,5 @@
 {
   "name": "ai-game-dev-plugin",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Build games in Unity, Unreal and Godot with AI: create the project, install the AI Game Developer plugin, sign in to ai-game.dev, open the editor and wire its MCP tools."
 }

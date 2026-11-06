@@ -7,9 +7,11 @@ Maintenance utilities for the `ai-game-dev-plugin` marketplace. Dependency-free,
 - The canonical runbook `plugins/<engine>-mcp/skills/<engine>-game-dev/SKILL.md` is copied to
   `.agents/skills/` (Codex repo-native skills, also read by Cursor and Gemini CLI) and to `skills/`
   (the Gemini CLI extension, whose `gemini-extension.json` sits at the repo root).
-- `assets/logo.png` is copied into each `plugins/<engine>-mcp/assets/` (Cursor needs the logo
-  inside the plugin).
-- Every `version` (catalog entries, plugin manifests, `gemini-extension.json`) must match.
+  It is also copied into `plugins/ai-game-dev/skills/` (the OpenAI plugin-directory package).
+- `assets/logo.png` is copied into each `plugins/<engine>-mcp/assets/` and into
+  `plugins/ai-game-dev/assets/` (Cursor and OpenAI need the logo inside the plugin).
+- Every `version` (catalog entries, plugin manifests, `gemini-extension.json`,
+  `plugins/ai-game-dev/plugin.json`) must match.
 
 ```bash
 node scripts/sync-skills.mjs          # write the copies
@@ -18,3 +20,26 @@ node scripts/sync-skills.mjs --check  # verify only; exits 1 on drift or a versi
 
 Run it after editing a runbook or the logo, and run `--check` before you commit. Never hand-edit
 the generated copies.
+
+## `build-openai-zip.mjs`: the OpenAI plugin-directory ZIP
+
+Validates `plugins/ai-game-dev/` against the OpenAI submission rules and packs it into
+`dist/ai-game-dev-openai-<version>.zip` (`dist/` is gitignored), with `plugin.json` at the ZIP root.
+Upload that file in the OpenAI Plugins dashboard.
+
+Checks: the listing text limits (`displayName`/`shortDescription` ≤ 30, `longDescription` ≤ 4000,
+`developerName` ≤ 80, ≤ 20 capabilities × 120, ≤ 3 unique starter prompts × 128), HTTPS listing
+URLs, `brandColor` contrast, square PNG icons of 48–4096 px, exactly 5 positive and 3 negative
+review cases, exactly one `streamable-http` MCP server with OAuth and no headers, no
+`test_credentials` / `reviewer_instructions` / `clientSecret` / hooks / app references, nothing that
+looks like a secret, valid skill frontmatter, and `sync-skills.mjs --check`.
+
+```bash
+node scripts/build-openai-zip.mjs --check                                 # validate only
+node scripts/build-openai-zip.mjs --demo-url https://youtu.be/<recording>  # validate and build
+```
+
+`review.demo_recording_url` in the repo stays a placeholder until the demo is recorded, and the build
+refuses to run until it gets a real HTTPS URL. `--demo-url` writes the URL into the packaged
+`plugin.json` only. Reviewer credentials never go into the package: enter them in the dashboard's
+**Review details** form.

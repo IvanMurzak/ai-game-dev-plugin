@@ -16,7 +16,7 @@ confirm the connection — no manual CLI juggling.
 ## Prerequisites
 
 - **Node.js 20.19+ or 22.12+**
-- **Godot 4.x (.NET / Mono build)** and the **.NET SDK** installed
+- **Godot 4.3+ (.NET / Mono build)** and the **.NET SDK** installed
 - A **free [ai-game.dev](https://ai-game.dev) account**
 
 ## Install

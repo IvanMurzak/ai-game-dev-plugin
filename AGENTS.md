@@ -40,7 +40,8 @@ plugins/ai-game-dev/                       # OpenAI plugin-directory package (no
   assets/logo.png                          # GENERATED copy of the root assets/logo.png
 scripts/sync-skills.mjs                    # regenerates the skill copies, checks versions
 scripts/build-openai-zip.mjs               # validates plugins/ai-game-dev, builds dist/*.zip for upload
-assets/                                    # README images (banner, demo, logo)
+assets/                                    # README images (hero/flow dark+light pairs, demo, banner, logo)
+docs/                                      # user docs beyond the README (install.md)
 ```
 
 `<engine>` is one of `unreal`, `unity`, `godot`; plugin names are `<engine>-mcp`.

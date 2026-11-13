@@ -16,7 +16,7 @@ confirm the connection — no manual CLI juggling.
 ## Prerequisites
 
 - **Node.js 20.19+ or 22.12+**
-- **Unreal Engine** installed (e.g. UE 5.7 via the Epic Games Launcher)
+- **Unreal Engine 5.5+** installed (e.g. UE 5.7 via the Epic Games Launcher)
 - A **C++ toolchain** (Visual Studio on Windows, Xcode on macOS)
 - A **free [ai-game.dev](https://ai-game.dev) account**
 

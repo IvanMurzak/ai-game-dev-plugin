@@ -10,11 +10,11 @@ door to [ai-game.dev](https://ai-game.dev).
 
 Ships one **skill** that fires when you ask the agent to create, set up or open a Godot project with AI:
 
-- ✅ **Create** — scaffolds a C# (.NET) project
-- ✅ **Install** — adds the Godot-MCP addon
-- ✅ **Sign in** — once per machine to ai-game.dev, with a browser code
-- ✅ **Open and verify** — the editor opens in Cloud mode; success only once it is connected
-- ✅ **Wire MCP** — registers the project's tools with your agent
+✅ **Create** — scaffolds a C# (.NET) project<br>
+✅ **Install** — adds the Godot-MCP addon<br>
+✅ **Sign in** — once per machine to ai-game.dev, with a browser code<br>
+✅ **Open and verify** — the editor opens in Cloud mode; success only once it is connected<br>
+✅ **Wire MCP** — registers the project's tools with your agent
 
 ## Prerequisites
 
@@ -56,3 +56,7 @@ verification URL + code for you to open in a browser), (re)**open** the editor i
 project's MCP tools so it can build the game for you.
 
 Learn more at **[ai-game.dev](https://ai-game.dev)**. Licensed Apache-2.0.
+
+<div align="center">
+  <a href="https://stand-with-ukraine.pp.ua"><img src="https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-rounded.svg" width="28" height="28" alt="Stand with Ukraine" title="Stand with Ukraine"></a>
+</div>

@@ -1,8 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-    <img alt="AI Game Developer, plugins and skills: your AI coding agent creates a Unity, Unreal Engine or Godot project and connects the editor to ai-game.dev" src="assets/hero-light.svg" width="100%">
-  </picture>
+  <img alt="AI Game Developer, plugins and skills: your AI coding agent creates a Unity, Unreal Engine or Godot project and connects the editor to ai-game.dev" src="assets/hero.svg" width="100%">
 </p>
 
 <p align="center">
@@ -14,20 +11,20 @@
   <a href="https://github.com/IvanMurzak/Unity-MCP"><img alt="Unity 2022.3+" src="https://img.shields.io/badge/Unity-2022.3%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unity"></a>
   <a href="https://github.com/IvanMurzak/Unreal-MCP"><img alt="Unreal Engine 5.5+" src="https://img.shields.io/badge/Unreal_Engine-5.5%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unrealengine"></a>
   <a href="https://github.com/IvanMurzak/Godot-MCP"><img alt="Godot 4.3+ .NET" src="https://img.shields.io/badge/Godot-4.3%2B_.NET-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=godotengine"></a>
+  <a href="https://nodejs.org/"><img alt="Node.js 20.19+" src="https://img.shields.io/badge/Node.js-20.19%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=nodedotjs"></a>
   <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&amp;color=047857&amp;style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
   <a href="https://discord.gg/cfbdMZX99G"><img alt="Discord" src="https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=discord"></a>
-  <a href="https://stand-with-ukraine.pp.ua"><img alt="Stand With Ukraine" src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg"></a>
 </p>
 
 Ask your coding agent for a game and it sets everything up: it creates the engine project, installs
 the AI Game Developer plugin, signs you in to [ai-game.dev](https://ai-game.dev), opens the editor
 and connects its MCP tools. From there the agent builds the game inside your real editor.
 
-- ✅ **One prompt to a connected editor** — project, plugin, sign-in, editor and MCP tools
-- ✅ **Unity, Unreal Engine, Godot** — one plugin and one skill per engine
-- ✅ **Four agents, one source** — Claude Code, Codex, Cursor and Gemini CLI
-- ✅ **Nothing installed globally** — every engine CLI runs through `npx`
-- ✅ **Verified before success** — the agent waits until the editor is ready and connected
+✅ **One prompt to a connected editor** — project, plugin, sign-in, editor and MCP tools<br>
+✅ **Unity, Unreal Engine, Godot** — one plugin and one skill per engine<br>
+✅ **Four agents, one source** — Claude Code, Codex, Cursor and Gemini CLI<br>
+✅ **Nothing installed globally** — every engine CLI runs through `npx`<br>
+✅ **Verified before success** — the agent waits until the editor is ready and connected
 
 ## 🚀 Quick start
 
@@ -52,7 +49,7 @@ Swap `unity-mcp` for `unreal-mcp` or `godot-mcp`, or install all three. Then jus
 | ----- | ------- |
 | OpenAI Codex | `codex plugin marketplace add IvanMurzak/ai-game-dev-plugin`<br>`codex plugin add unity-mcp@ai-game-dev-plugin` |
 | Cursor | **Customize** → **From GitHub Repository** → `https://github.com/IvanMurzak/ai-game-dev-plugin`, then install `unity-mcp` |
-| Gemini CLI | `gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin` (all three engines) |
+| Gemini CLI | `gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin`<br>one extension, all three engines |
 | Any agent with skills | `npx skills add IvanMurzak/ai-game-dev-plugin` |
 
 Copying the skills by hand and the ChatGPT / OpenAI plugin-directory package:
@@ -72,10 +69,7 @@ itself when you ask to create, set up or open a project for its engine.
 ## 🤖 What the agent does
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/flow-dark.svg">
-    <img alt="The setup flow: create the project, install the plugin, sign in, restart the editor, verify the connection, wire MCP tools into the agent" src="assets/flow-light.svg" width="100%">
-  </picture>
+  <img alt="The setup flow: create the project, install the plugin, sign in, restart the editor, verify the connection, wire MCP tools into the agent" src="assets/flow.svg" width="100%">
 </p>
 
 Every step runs through `npx -y <engine-cli>@latest`, so nothing is installed globally.
@@ -125,3 +119,7 @@ scripts: [`scripts/README.md`](./scripts/README.md).
 ## 📄 License
 
 [Apache-2.0](./LICENSE) © 2026 Ivan Murzak.
+
+<div align="center">
+  <a href="https://stand-with-ukraine.pp.ua"><img src="https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-rounded.svg" width="28" height="28" alt="Stand with Ukraine" title="Stand with Ukraine"></a>
+</div>

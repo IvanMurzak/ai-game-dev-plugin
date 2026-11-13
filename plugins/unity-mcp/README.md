@@ -10,11 +10,11 @@ door to [ai-game.dev](https://ai-game.dev).
 
 Ships one **skill** that fires when you ask the agent to create, set up or open a Unity project with AI:
 
-- ✅ **Create** — scaffolds the project through Unity Hub
-- ✅ **Install** — adds the Unity-MCP package
-- ✅ **Sign in** — once per machine to ai-game.dev, with a browser code
-- ✅ **Open and verify** — the editor auto-connects in Cloud mode; success only once it is connected
-- ✅ **Wire MCP** — registers the project's tools with your agent
+✅ **Create** — scaffolds the project through Unity Hub<br>
+✅ **Install** — adds the Unity-MCP package<br>
+✅ **Sign in** — once per machine to ai-game.dev, with a browser code<br>
+✅ **Open and verify** — the editor auto-connects in Cloud mode; success only once it is connected<br>
+✅ **Wire MCP** — registers the project's tools with your agent
 
 ## Prerequisites
 
@@ -56,3 +56,7 @@ in Cloud mode), and **wait for the connection** to ai-game.dev before it reports
 the agent to the project's MCP tools so it can build the game for you.
 
 Learn more at **[ai-game.dev](https://ai-game.dev)**. Licensed Apache-2.0.
+
+<div align="center">
+  <a href="https://stand-with-ukraine.pp.ua"><img src="https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-rounded.svg" width="28" height="28" alt="Stand with Ukraine" title="Stand with Ukraine"></a>
+</div>

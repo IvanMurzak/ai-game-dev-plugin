@@ -8,10 +8,13 @@ door to [ai-game.dev](https://ai-game.dev).
 
 ## What it does
 
-Ships a single **skill** that fires whenever you ask the agent to create, set up, or open a Godot
-project with AI. The agent then runs the full automated flow: scaffold a C# (.NET) project, install
-the Godot-MCP addon, sign this machine in to ai-game.dev once, open the editor in Cloud mode, and
-confirm the connection — no manual CLI juggling.
+Ships one **skill** that fires when you ask the agent to create, set up or open a Godot project with AI:
+
+- ✅ **Create** — scaffolds a C# (.NET) project
+- ✅ **Install** — adds the Godot-MCP addon
+- ✅ **Sign in** — once per machine to ai-game.dev, with a browser code
+- ✅ **Open and verify** — the editor opens in Cloud mode; success only once it is connected
+- ✅ **Wire MCP** — registers the project's tools with your agent
 
 ## Prerequisites
 

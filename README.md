@@ -6,13 +6,16 @@
 </p>
 
 <p align="center">
-  <a href="https://code.claude.com/docs/en/plugins"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-D97757?style=flat&labelColor=333A41"></a>
-  <a href="https://developers.openai.com/codex/"><img alt="Codex plugin" src="https://img.shields.io/badge/Codex-plugin-10A37F?style=flat&labelColor=333A41"></a>
-  <a href="./plugins"><img alt="Agent Skills" src="https://img.shields.io/badge/Agent-Skills-FFDC00?style=flat&labelColor=333A41"></a>
-  <a href="https://modelcontextprotocol.io/introduction"><img alt="MCP" src="https://badge.mcpx.dev"></a>
-  <a href="https://discord.gg/cfbdMZX99G"><img alt="Discord" src="https://img.shields.io/badge/Discord-Join-7289da?logo=discord&logoColor=white&labelColor=333A41"></a>
-  <a href="https://github.com/IvanMurzak/ai-game-dev-plugin/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/IvanMurzak/ai-game-dev-plugin"></a>
-  <a href="./LICENSE"><img alt="License" src="https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&labelColor=333A41"></a>
+  <a href="https://code.claude.com/docs/en/plugins"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=claude"></a>
+  <a href="https://developers.openai.com/codex/"><img alt="Codex plugin" src="https://img.shields.io/badge/Codex-plugin-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
+  <a href="https://cursor.com/docs/plugins"><img alt="Cursor plugin" src="https://img.shields.io/badge/Cursor-plugin-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=cursor"></a>
+  <a href="https://geminicli.com/docs/extensions/"><img alt="Gemini CLI extension" src="https://img.shields.io/badge/Gemini_CLI-extension-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=googlegemini"></a>
+  <a href="https://modelcontextprotocol.io/introduction"><img alt="MCP" src="https://img.shields.io/badge/MCP-tools-4338CA?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=modelcontextprotocol"></a>
+  <a href="https://github.com/IvanMurzak/Unity-MCP"><img alt="Unity 2022.3+" src="https://img.shields.io/badge/Unity-2022.3%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unity"></a>
+  <a href="https://github.com/IvanMurzak/Unreal-MCP"><img alt="Unreal Engine 5.5+" src="https://img.shields.io/badge/Unreal_Engine-5.5%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unrealengine"></a>
+  <a href="https://github.com/IvanMurzak/Godot-MCP"><img alt="Godot 4.3+ .NET" src="https://img.shields.io/badge/Godot-4.3%2B_.NET-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=godotengine"></a>
+  <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&amp;color=047857&amp;style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
+  <a href="https://discord.gg/cfbdMZX99G"><img alt="Discord" src="https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=discord"></a>
   <a href="https://stand-with-ukraine.pp.ua"><img alt="Stand With Ukraine" src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg"></a>
 </p>
 
@@ -20,8 +23,11 @@ Ask your coding agent for a game and it sets everything up: it creates the engin
 the AI Game Developer plugin, signs you in to [ai-game.dev](https://ai-game.dev), opens the editor
 and connects its MCP tools. From there the agent builds the game inside your real editor.
 
-One plugin per engine (**Unity**, **Unreal Engine**, **Godot**), each a single **skill** that works
-in **Claude Code**, **OpenAI Codex**, **Cursor** and **Gemini CLI** from the same source.
+- ✅ **One prompt to a connected editor** — project, plugin, sign-in, editor and MCP tools
+- ✅ **Unity, Unreal Engine, Godot** — one plugin and one skill per engine
+- ✅ **Four agents, one source** — Claude Code, Codex, Cursor and Gemini CLI
+- ✅ **Nothing installed globally** — every engine CLI runs through `npx`
+- ✅ **Verified before success** — the agent waits until the editor is ready and connected
 
 ## 🚀 Quick start
 
@@ -92,7 +98,7 @@ Exact commands, checks and fixes per engine are in the runbooks:
 ## ✅ Requirements
 
 - **Node.js 20.19+ or 22.12+** (the CLIs run through `npx`).
-- **The engine**: Unity (through Unity Hub), Unreal Engine 5.5+ with a C++ toolchain, or Godot 4.3+
+- **The engine**: Unity 2022.3+ (through Unity Hub), Unreal Engine 5.5+ with a C++ toolchain, or Godot 4.3+
   **.NET** with the .NET SDK.
 - A free **[ai-game.dev](https://ai-game.dev)** account.
 - A desktop session: the editor opens a real window.

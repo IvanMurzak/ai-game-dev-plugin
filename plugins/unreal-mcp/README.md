@@ -8,10 +8,13 @@ door to [ai-game.dev](https://ai-game.dev).
 
 ## What it does
 
-Ships a single **skill** that fires whenever you ask the agent to create, set up, or open an Unreal
-project with AI. The agent then runs the full automated flow: scaffold the project, install the
-Unreal-MCP plugin, sign this machine in to ai-game.dev once, open the editor in Cloud mode, and
-confirm the connection — no manual CLI juggling.
+Ships one **skill** that fires when you ask the agent to create, set up or open an Unreal project with AI:
+
+- ✅ **Create** — scaffolds a C++ project
+- ✅ **Install** — adds the Unreal-MCP plugin
+- ✅ **Sign in** — once per machine to ai-game.dev, with a browser code
+- ✅ **Open and verify** — the editor opens in Cloud mode; success only once it is connected
+- ✅ **Wire MCP** — registers the project's tools with your agent
 
 ## Prerequisites
 

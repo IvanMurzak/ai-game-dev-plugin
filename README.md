@@ -3,17 +3,18 @@
 </p>
 
 <p align="center">
-  <a href="https://code.claude.com/docs/en/plugins"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=claude"></a>
-  <a href="https://developers.openai.com/codex/"><img alt="Codex plugin" src="https://img.shields.io/badge/Codex-plugin-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
-  <a href="https://cursor.com/docs/plugins"><img alt="Cursor plugin" src="https://img.shields.io/badge/Cursor-plugin-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=cursor"></a>
-  <a href="https://geminicli.com/docs/extensions/"><img alt="Gemini CLI extension" src="https://img.shields.io/badge/Gemini_CLI-extension-6D28D9?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=googlegemini"></a>
-  <a href="https://modelcontextprotocol.io/introduction"><img alt="MCP" src="https://img.shields.io/badge/MCP-tools-4338CA?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=modelcontextprotocol"></a>
+  <a href="https://code.claude.com/docs/en/plugins"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=claude"></a>
+  <a href="https://developers.openai.com/codex/"><img alt="Codex plugin" src="https://img.shields.io/badge/Codex-plugin-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
+  <a href="https://cursor.com/docs/plugins"><img alt="Cursor plugin" src="https://img.shields.io/badge/Cursor-plugin-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=cursor"></a>
+  <a href="https://geminicli.com/docs/extensions/"><img alt="Gemini CLI extension" src="https://img.shields.io/badge/Gemini_CLI-extension-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=googlegemini"></a>
+  <a href="https://modelcontextprotocol.io/introduction"><img alt="MCP" src="https://img.shields.io/badge/MCP-tools-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=modelcontextprotocol"></a>
   <a href="https://github.com/IvanMurzak/Unity-MCP"><img alt="Unity 2022.3+" src="https://img.shields.io/badge/Unity-2022.3%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unity"></a>
   <a href="https://github.com/IvanMurzak/Unreal-MCP"><img alt="Unreal Engine 5.5+" src="https://img.shields.io/badge/Unreal_Engine-5.5%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unrealengine"></a>
   <a href="https://github.com/IvanMurzak/Godot-MCP"><img alt="Godot 4.3+ .NET" src="https://img.shields.io/badge/Godot-4.3%2B_.NET-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=godotengine"></a>
   <a href="https://nodejs.org/"><img alt="Node.js 20.19+" src="https://img.shields.io/badge/Node.js-20.19%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=nodedotjs"></a>
   <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&amp;color=047857&amp;style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
   <a href="https://discord.gg/cfbdMZX99G"><img alt="Discord" src="https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=discord"></a>
+  <a href="https://stand-with-ukraine.pp.ua"><img src="https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-square.svg" height="28" alt="Stand with Ukraine" title="Stand with Ukraine"></a>
 </p>
 
 Ask your coding agent for a game and it sets everything up: it creates the engine project, installs
@@ -119,7 +120,3 @@ scripts: [`scripts/README.md`](./scripts/README.md).
 ## 📄 License
 
 [Apache-2.0](./LICENSE) © 2026 Ivan Murzak.
-
-<div align="center">
-  <a href="https://stand-with-ukraine.pp.ua"><img src="https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-rounded.svg" width="28" height="28" alt="Stand with Ukraine" title="Stand with Ukraine"></a>
-</div>

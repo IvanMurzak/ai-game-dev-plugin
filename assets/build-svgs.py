@@ -12,10 +12,12 @@ import svgkit as K  # noqa: E402
 
 
 def hero():
-    right = (K.card(760, 160, 160, 64, "Your agent", accent="red")
-             + "".join(K.card(1000, y, 180, 64, name, accent=acc)
-                       for name, y, acc in (("Unity", 64, "blue"), ("Unreal Engine", 160, "blue"), ("Godot", 256, "blue")))
-             + "".join(K.wire(f"M920,192 C960,192 960,{y + 32} 1000,{y + 32}", begin=i * 0.8)
+    # The brand logo (ai-game.dev) on the left, wired to the three engine editors.
+    right = (f'<circle cx="850" cy="176" r="96" fill="url(#logoGlow)"/>' + K.logo(850, 176, 120)
+             + f'<text x="850" y="290" text-anchor="middle" class="m" font-size="16" fill="{K.SECOND}">ai-game.dev</text>'
+             + "".join(K.card(1000, y, 180, 64, name, accent="blue")
+                       for name, y in (("Unity", 64), ("Unreal Engine", 160), ("Godot", 256)))
+             + "".join(K.wire(f"M915,176 C960,176 960,{y + 32} 1000,{y + 32}", begin=i * 0.8)
                        for i, y in enumerate((64, 160, 256))))
     return K.hero(title="AI Game ", accent="Developer", eyebrow_text="Plugins & skills",
                   subtitle=["Ask your coding agent for a game:", "it sets up the engine and connects the editor."],
@@ -77,8 +79,7 @@ def demo():
     svg = K.terminal(lines, title="Claude Code  ·  ~/Games", hold=10.0,
                       label="Demo: the agent creates a Unity project, installs the plugin, signs in to ai-game.dev, "
                             "opens the editor and wires MCP tools")
-    # Keep the user's prompt (first line) on screen from the first frame, so the panel never starts empty.
-    return svg.replace('values="0;0;1;1;0;0"', 'values="1;1;1;1;0;1"', 1)
+    return svg
 
 
 if __name__ == "__main__":

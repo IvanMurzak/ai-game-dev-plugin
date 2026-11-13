@@ -2,20 +2,13 @@
   <img alt="AI Game Developer, plugins and skills: your AI coding agent creates a Unity, Unreal Engine or Godot project and connects the editor to ai-game.dev" src="assets/hero.svg" width="100%">
 </p>
 
-<p align="center">
-  <a href="https://code.claude.com/docs/en/plugins"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=claude"></a>
-  <a href="https://developers.openai.com/codex/"><img alt="Codex plugin" src="https://img.shields.io/badge/Codex-plugin-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
-  <a href="https://cursor.com/docs/plugins"><img alt="Cursor plugin" src="https://img.shields.io/badge/Cursor-plugin-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=cursor"></a>
-  <a href="https://geminicli.com/docs/extensions/"><img alt="Gemini CLI extension" src="https://img.shields.io/badge/Gemini_CLI-extension-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=googlegemini"></a>
-  <a href="https://modelcontextprotocol.io/introduction"><img alt="MCP" src="https://img.shields.io/badge/MCP-tools-2F6F9F?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=modelcontextprotocol"></a>
-  <a href="https://github.com/IvanMurzak/Unity-MCP"><img alt="Unity 2022.3+" src="https://img.shields.io/badge/Unity-2022.3%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unity"></a>
-  <a href="https://github.com/IvanMurzak/Unreal-MCP"><img alt="Unreal Engine 5.5+" src="https://img.shields.io/badge/Unreal_Engine-5.5%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=unrealengine"></a>
-  <a href="https://github.com/IvanMurzak/Godot-MCP"><img alt="Godot 4.3+ .NET" src="https://img.shields.io/badge/Godot-4.3%2B_.NET-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=godotengine"></a>
-  <a href="https://nodejs.org/"><img alt="Node.js 20.19+" src="https://img.shields.io/badge/Node.js-20.19%2B-0E7490?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=nodedotjs"></a>
-  <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&amp;color=047857&amp;style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white"></a>
-  <a href="https://discord.gg/cfbdMZX99G"><img alt="Discord" src="https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&amp;labelColor=0F172A&amp;logoColor=white&amp;logo=discord"></a>
-  <a href="https://stand-with-ukraine.pp.ua"><img src="https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-square.svg" height="28" alt="Stand with Ukraine" title="Stand with Ukraine"></a>
-</p>
+<div align="center">
+
+[![Claude Code plugin](https://img.shields.io/badge/Claude_Code-plugin-2F6F9F?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=claude)](https://code.claude.com/docs/en/plugins) [![Codex plugin](https://img.shields.io/badge/Codex-plugin-2F6F9F?style=for-the-badge&labelColor=0F172A&logoColor=white)](https://developers.openai.com/codex/) [![Cursor plugin](https://img.shields.io/badge/Cursor-plugin-2F6F9F?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=cursor)](https://cursor.com/docs/plugins) [![Gemini CLI extension](https://img.shields.io/badge/Gemini_CLI-extension-2F6F9F?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=googlegemini)](https://geminicli.com/docs/extensions/)
+[![MCP](https://img.shields.io/badge/MCP-tools-2F6F9F?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=modelcontextprotocol)](https://modelcontextprotocol.io/introduction) [![Unity 2022.3+](https://img.shields.io/badge/Unity-2022.3%2B-0E7490?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=unity)](https://github.com/IvanMurzak/Unity-MCP) [![Unreal Engine 5.5+](https://img.shields.io/badge/Unreal_Engine-5.5%2B-0E7490?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=unrealengine)](https://github.com/IvanMurzak/Unreal-MCP) [![Godot 4.3+ .NET](https://img.shields.io/badge/Godot-4.3%2B_.NET-0E7490?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=godotengine)](https://github.com/IvanMurzak/Godot-MCP)
+[![Node.js 20.19+](https://img.shields.io/badge/Node.js-20.19%2B-0E7490?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=nodedotjs)](https://nodejs.org/) [![License: Apache-2.0](https://img.shields.io/github/license/IvanMurzak/ai-game-dev-plugin?label=License&color=047857&style=for-the-badge&labelColor=0F172A&logoColor=white)](./LICENSE) [![Discord](https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&labelColor=0F172A&logoColor=white&logo=discord)](https://discord.gg/cfbdMZX99G) [![Stand with Ukraine](https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-badge.svg)](https://stand-with-ukraine.pp.ua)
+
+</div>
 
 Ask your coding agent for a game and it sets everything up: it creates the engine project, installs
 the AI Game Developer plugin, signs you in to [ai-game.dev](https://ai-game.dev), opens the editor

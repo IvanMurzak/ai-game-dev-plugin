@@ -73,8 +73,10 @@ def demo():
         {"cmd": c + "install-plugin ./MyGame"},
         {"cmd": c + "login"},
         {"out": [("muted", "Open the link in your browser and enter the code shown")]},
+        {"cmd": c + "close ./MyGame"},
         {"cmd": c + "open ./MyGame"},
         {"cmd": c + "wait-for-ready ./MyGame"},
+        {"cmd": c + "status ./MyGame"},
         {"cmd": c + "setup-mcp claude-code ./MyGame"},
         {"out": [("ok", "✓ "), ("text", "Unity is open and connected. What should we build first?")]},
     ]

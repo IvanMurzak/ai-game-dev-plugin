@@ -40,7 +40,7 @@ plugins/ai-game-dev/                       # OpenAI plugin-directory package (no
   assets/logo.png                          # GENERATED copy of the root assets/logo.png
 scripts/sync-skills.mjs                    # regenerates the skill copies, checks versions
 scripts/build-openai-zip.mjs               # validates plugins/ai-game-dev, builds dist/*.zip for upload
-assets/                                    # README images (hero, flow, demo: build-svgs.py + svgkit.py), banner, logo
+assets/                                    # README images (hero, flow, demo: build-svgs.py + svgkit.py), logo; banner.* is no longer linked
 docs/                                      # user docs beyond the README (install.md)
 ```
 

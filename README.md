@@ -37,17 +37,8 @@ Swap `unity-mcp` for `unreal-mcp` or `godot-mcp`, or install all three. Then jus
   <img src="./assets/demo.svg" alt="Demo: the agent creates a Unity project, installs the plugin, signs in to ai-game.dev, opens the editor and wires MCP tools." width="100%" />
 </div>
 
-**Other agents**
-
-| Agent | Install |
-| ----- | ------- |
-| OpenAI Codex | `codex plugin marketplace add IvanMurzak/ai-game-dev-plugin`<br>`codex plugin add unity-mcp@ai-game-dev-plugin` |
-| Cursor | **Customize** → **From GitHub Repository** → `https://github.com/IvanMurzak/ai-game-dev-plugin`, then install `unity-mcp` |
-| Gemini CLI | `gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin`<br>one extension, all three engines |
-| Any agent with skills | `npx skills add IvanMurzak/ai-game-dev-plugin` |
-
-Copying the skills by hand and the ChatGPT / OpenAI plugin-directory package:
-[docs/install.md](./docs/install.md).
+**Other agents:** OpenAI Codex, Cursor, Gemini CLI, any agent with skills (`npx skills`), copying the
+skills by hand, and the ChatGPT / OpenAI plugin-directory package: [docs/install.md](./docs/install.md).
 
 ## 🎮 The plugins
 
@@ -65,8 +56,6 @@ itself when you ask to create, set up or open a project for its engine.
 <p align="center">
   <img alt="The setup flow: create the project, install the plugin, sign in, restart the editor, verify the connection, wire MCP tools into the agent" src="assets/flow.svg" width="100%">
 </p>
-
-Every step runs through `npx -y <engine-cli>@latest`, so nothing is installed globally.
 
 1. **Create** a project (skipped when you already have one).
 2. **Install** the AI Game Developer plugin into it.

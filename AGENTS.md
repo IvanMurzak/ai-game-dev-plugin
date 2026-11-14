@@ -82,6 +82,8 @@ The runbooks are agent-neutral except the agent id in the **wire-MCP** and **ski
 
 The order is create → install → login → close → open → wait-for-ready → wire-MCP. Each runbook's
 **Golden rules** section is the one place that explains why; change the flow there, not here.
+The README drawings (`assets/build-svgs.py`) hard-code the steps and commands: when the flow changes,
+edit that script to match and re-run it.
 
 ## Contributing
 

@@ -13,12 +13,13 @@ import svgkit as K  # noqa: E402
 
 def hero():
     # The brand logo (ai-game.dev) on the left, wired to the three engine editors.
-    right = (f'<circle cx="850" cy="176" r="96" fill="url(#logoGlow)"/>' + K.logo(850, 176, 120)
+    engines = (("Unity", 64), ("Unreal Engine", 160), ("Godot", 256))
+    right = ('<circle cx="850" cy="176" r="96" fill="url(#logoGlow)"/>' + K.logo(850, 176, 120)
              + f'<text x="850" y="290" text-anchor="middle" class="m" font-size="16" fill="{K.SECOND}">ai-game.dev</text>'
              + "".join(K.card(1000, y, 180, 64, name, accent="blue")
-                       for name, y in (("Unity", 64), ("Unreal Engine", 160), ("Godot", 256)))
+                       for name, y in engines)
              + "".join(K.wire(f"M915,176 C960,176 960,{y + 32} 1000,{y + 32}", begin=i * 0.8)
-                       for i, y in enumerate((64, 160, 256))))
+                       for i, (_, y) in enumerate(engines)))
     return K.hero(title="AI Game ", accent="Developer", eyebrow_text="Plugins & skills",
                   subtitle=["Ask your coding agent for a game:", "it sets up the engine and connects the editor."],
                   chip_items=["Claude Code", "Codex", "Cursor", "Gemini CLI"], right=right, accent_fx="flow",
@@ -43,8 +44,9 @@ def flow():
     centers = []
     for i, (title, cmd, sub, acc) in enumerate(STEPS):
         x, y = X0 + (i % 3) * (CW + GAP), rows[i // 3]
-        body.append(K.card(x, y, CW, CH, title, accent=acc))
-        body[-1] = body[-1].replace(f'y="{y + CH / 2 + 6}"', f'y="{y + 40}"')  # title to the top of the card
+        card, centred = K.card(x, y, CW, CH, title, accent=acc), f'y="{y + CH / 2 + 6}"'
+        assert card.count(centred) == 1, "svgkit.card changed its title position"
+        body.append(card.replace(centred, f'y="{y + 40}"'))  # title to the top of the card
         body.append(f'<text x="{x + 22}" y="{y + 74}" class="m" font-size="18" fill="{K.BLUE}">{K.esc(cmd)}</text>')
         body.append(f'<text x="{x + 22}" y="{y + 102}" class="s" font-size="16" fill="{K.MUTED}">{K.esc(sub)}</text>')
         centers.append((x, y))
@@ -76,10 +78,9 @@ def demo():
         {"cmd": c + "setup-mcp claude-code ./MyGame"},
         {"out": [("ok", "✓ "), ("text", "Unity is open and connected. What should we build first?")]},
     ]
-    svg = K.terminal(lines, title="Claude Code  ·  ~/Games", hold=10.0,
+    return K.terminal(lines, title="Claude Code  ·  ~/Games", hold=10.0,
                       label="Demo: the agent creates a Unity project, installs the plugin, signs in to ai-game.dev, "
                             "opens the editor and wires MCP tools")
-    return svg
 
 
 if __name__ == "__main__":

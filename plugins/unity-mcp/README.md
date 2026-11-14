@@ -47,13 +47,10 @@ codex plugin add unity-mcp@ai-game-dev-plugin
 gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin
 ```
 
-## What the AI will do automatically
+## Try it
 
-Ask something like *"Set up a new Unity game with AI."* The agent will **create** the project,
-**install** the Unity-MCP plugin, walk you through a one-time **login** for this machine (it prints
-a verification URL + code for you to open in a browser), (re)**open** the editor (it auto-connects
-in Cloud mode), and **wait for the connection** to ai-game.dev before it reports success — then wire
-the agent to the project's MCP tools so it can build the game for you.
+Ask something like *"Set up a new Unity game with AI."* The full flow, with every command and check, is the
+skill's runbook: [`skills/unity-game-dev/SKILL.md`](skills/unity-game-dev/SKILL.md).
 
 Learn more at **[ai-game.dev](https://ai-game.dev)**. Licensed Apache-2.0.
 

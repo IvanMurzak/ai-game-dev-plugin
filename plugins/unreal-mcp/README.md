@@ -8,15 +8,18 @@ door to [ai-game.dev](https://ai-game.dev).
 
 ## What it does
 
-Ships a single **skill** that fires whenever you ask the agent to create, set up, or open an Unreal
-project with AI. The agent then runs the full automated flow: scaffold the project, install the
-Unreal-MCP plugin, sign this machine in to ai-game.dev once, open the editor in Cloud mode, and
-confirm the connection — no manual CLI juggling.
+Ships one **skill** that fires when you ask the agent to create, set up or open an Unreal project with AI:
+
+✅ **Create** — scaffolds a C++ project<br>
+✅ **Install** — adds the Unreal-MCP plugin<br>
+✅ **Sign in** — once per machine to ai-game.dev, with a browser code<br>
+✅ **Open and verify** — the editor opens in Cloud mode; success only once it is connected<br>
+✅ **Wire MCP** — registers the project's tools with your agent
 
 ## Prerequisites
 
 - **Node.js 20.19+ or 22.12+**
-- **Unreal Engine** installed (e.g. UE 5.7 via the Epic Games Launcher)
+- **Unreal Engine 5.5+** installed (e.g. UE 5.7 via the Epic Games Launcher)
 - A **C++ toolchain** (Visual Studio on Windows, Xcode on macOS)
 - A **free [ai-game.dev](https://ai-game.dev) account**
 
@@ -45,12 +48,11 @@ codex plugin add unreal-mcp@ai-game-dev-plugin
 gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin
 ```
 
-## What the AI will do automatically
+## Try it
 
-Ask something like *"Set up a new Unreal game with AI."* The agent will **create** the project,
-**install** the Unreal-MCP plugin, walk you through a one-time **login** for this machine (it prints
-a verification URL + code for you to open in a browser), (re)**open** the editor in Cloud mode, and
-**wait for the connection** to ai-game.dev before it reports success — then wire the agent to the
-project's MCP tools so it can build the game for you.
+Ask something like *"Set up a new Unreal game with AI."* The full flow, with every command and check, is the
+skill's runbook: [`skills/unreal-game-dev/SKILL.md`](skills/unreal-game-dev/SKILL.md).
 
 Learn more at **[ai-game.dev](https://ai-game.dev)**. Licensed Apache-2.0.
+
+[![Stand with Ukraine](https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-badge.svg)](https://stand-with-ukraine.pp.ua)

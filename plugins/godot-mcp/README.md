@@ -8,15 +8,18 @@ door to [ai-game.dev](https://ai-game.dev).
 
 ## What it does
 
-Ships a single **skill** that fires whenever you ask the agent to create, set up, or open a Godot
-project with AI. The agent then runs the full automated flow: scaffold a C# (.NET) project, install
-the Godot-MCP addon, sign this machine in to ai-game.dev once, open the editor in Cloud mode, and
-confirm the connection — no manual CLI juggling.
+Ships one **skill** that fires when you ask the agent to create, set up or open a Godot project with AI:
+
+✅ **Create** — scaffolds a C# (.NET) project<br>
+✅ **Install** — adds the Godot-MCP addon<br>
+✅ **Sign in** — once per machine to ai-game.dev, with a browser code<br>
+✅ **Open and verify** — the editor opens in Cloud mode; success only once it is connected<br>
+✅ **Wire MCP** — registers the project's tools with your agent
 
 ## Prerequisites
 
 - **Node.js 20.19+ or 22.12+**
-- **Godot 4.x (.NET / Mono build)** and the **.NET SDK** installed
+- **Godot 4.3+ (.NET / Mono build)** and the **.NET SDK** installed
 - A **free [ai-game.dev](https://ai-game.dev) account**
 
 ## Install
@@ -44,12 +47,11 @@ codex plugin add godot-mcp@ai-game-dev-plugin
 gemini extensions install https://github.com/IvanMurzak/ai-game-dev-plugin
 ```
 
-## What the AI will do automatically
+## Try it
 
-Ask something like *"Set up a new Godot game with AI."* The agent will **create** the C# project,
-**install** the Godot-MCP addon, walk you through a one-time **login** for this machine (it prints a
-verification URL + code for you to open in a browser), (re)**open** the editor in Cloud mode, and
-**wait for the connection** to ai-game.dev before it reports success — then wire the agent to the
-project's MCP tools so it can build the game for you.
+Ask something like *"Set up a new Godot game with AI."* The full flow, with every command and check, is the
+skill's runbook: [`skills/godot-game-dev/SKILL.md`](skills/godot-game-dev/SKILL.md).
 
 Learn more at **[ai-game.dev](https://ai-game.dev)**. Licensed Apache-2.0.
+
+[![Stand with Ukraine](https://raw.githubusercontent.com/IvanMurzak/IvanMurzak/main/images/ukraine/flag-badge.svg)](https://stand-with-ukraine.pp.ua)

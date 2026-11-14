@@ -40,7 +40,8 @@ plugins/ai-game-dev/                       # OpenAI plugin-directory package (no
   assets/logo.png                          # GENERATED copy of the root assets/logo.png
 scripts/sync-skills.mjs                    # regenerates the skill copies, checks versions
 scripts/build-openai-zip.mjs               # validates plugins/ai-game-dev, builds dist/*.zip for upload
-assets/                                    # README images (banner, demo, logo)
+assets/                                    # README images (hero, flow, demo: build-svgs.py + svgkit.py), logo; banner.* is no longer linked
+docs/                                      # user docs beyond the README (install.md)
 ```
 
 `<engine>` is one of `unreal`, `unity`, `godot`; plugin names are `<engine>-mcp`.
@@ -81,6 +82,8 @@ The runbooks are agent-neutral except the agent id in the **wire-MCP** and **ski
 
 The order is create → install → login → close → open → wait-for-ready → wire-MCP. Each runbook's
 **Golden rules** section is the one place that explains why; change the flow there, not here.
+The README drawings (`assets/build-svgs.py`) hard-code the steps and commands: when the flow changes,
+edit that script to match and re-run it.
 
 ## Contributing
 

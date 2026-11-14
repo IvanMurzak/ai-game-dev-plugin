@@ -21,7 +21,7 @@ def hero():
                        for i, y in enumerate((64, 160, 256))))
     return K.hero(title="AI Game ", accent="Developer", eyebrow_text="Plugins & skills",
                   subtitle=["Ask your coding agent for a game:", "it sets up the engine and connects the editor."],
-                  chip_items=["Claude Code", "Codex", "Cursor", "Gemini CLI"], right=right,
+                  chip_items=["Claude Code", "Codex", "Cursor", "Gemini CLI"], right=right, accent_fx="flow",
                   label="AI Game Developer plugins and skills: your coding agent creates a Unity, Unreal Engine or "
                         "Godot project and connects the editor")
 
